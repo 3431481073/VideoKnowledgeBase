@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QTreeWidgetItem, QLabel, QSlider, QStyle, QGraphicsView,
     QGraphicsScene, QFrame, QHeaderView, QAbstractItemView,
     QToolButton, QWidgetAction, QLineEdit, QScrollArea, QPlainTextEdit,
-    QSizePolicy
+    QSizePolicy, QInputDialog
 )
 from PySide6.QtMultimediaWidgets import QGraphicsVideoItem
 from PySide6.QtCore import Qt, QThread, Signal, QObject, QUrl, QDateTime, QEvent
@@ -28,15 +28,53 @@ from workspace import (
     format_size, format_time, sanitize_filename
 )
 
-DEEPSEEK_API_KEY = ""
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 RAW_DIR = os.path.join(BASE_DIR, "data", "raw_transcripts")
 AI_DIR = os.path.join(BASE_DIR, "data", "ai_processed")
 BACKUP_DIR = os.path.join(BASE_DIR, "data", "backups")
+CONFIG_FILE = os.path.join(BASE_DIR, "data", "config.json")
 os.makedirs(RAW_DIR, exist_ok=True)
 os.makedirs(AI_DIR, exist_ok=True)
 os.makedirs(BACKUP_DIR, exist_ok=True)
+
+# 全局 API Key
+API_KEY = ""
+
+
+def load_config():
+    global API_KEY
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                API_KEY = data.get("api_key", "")
+        except Exception:
+            API_KEY = ""
+    return API_KEY
+
+
+def save_config():
+    try:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            json.dump({"api_key": API_KEY}, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+def prompt_for_api_key(parent):
+    """弹出输入框让用户输入 API Key，保存到配置文件"""
+    global API_KEY
+    key, ok = QInputDialog.getText(
+        parent,
+        "DeepSeek API Key",
+        "请输入你的 DeepSeek API Key："
+    )
+    if ok and key.strip():
+        API_KEY = key.strip()
+        save_config()
+        return True
+    else:
+        return False
 
 
 # ---------- 后台任务 ----------
@@ -136,8 +174,20 @@ class MainWindow(QMainWindow):
         self.worker_thread = None
         self.ai_batch_worker_thread = None
 
+        # 加载配置，若没有 API Key 则弹出输入框
+        self.ensure_api_key()
+
         self._build_ui()
         self.load_workspace()
+
+    def ensure_api_key(self):
+        """确保存在有效的 API Key，若不存在则弹出输入框"""
+        load_config()
+        while not API_KEY:
+            QMessageBox.information(self, "需要 API Key", "首次使用需要输入 DeepSeek API Key。")
+            if not prompt_for_api_key(self):
+                QMessageBox.warning(self, "警告", "未输入 API Key，程序将无法使用 AI 功能。")
+                break
 
     def _build_ui(self):
         central_widget = QWidget()
@@ -174,8 +224,8 @@ class MainWindow(QMainWindow):
         self.tree_widget.setHeaderLabels(
             ["文件名", "创建时间", "大小", "转写", "AI", "播放"])
         self.tree_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
-        self.tree_widget.setSelectionBehavior(QAbstractItemView.SelectRows)  # 整行选中
-        self.tree_widget.setRootIsDecorated(False)  # 隐藏展开箭头占位
+        self.tree_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tree_widget.setRootIsDecorated(False)
         self.tree_widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree_widget.customContextMenuRequested.connect(self.show_context_menu)
         self.tree_widget.itemDoubleClicked.connect(self.on_item_double_clicked)
@@ -185,17 +235,17 @@ class MainWindow(QMainWindow):
 
         header = self.tree_widget.header()
         header.setStretchLastSection(False)
-        header.setSectionResizeMode(0, QHeaderView.Stretch)  # 文件名列拉伸
-        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)  # 创建时间
-        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)  # 大小
+        header.setSectionResizeMode(0, QHeaderView.Stretch)          # 文件名列拉伸
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents) # 创建时间
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents) # 大小
         header.setSectionResizeMode(3, QHeaderView.Fixed)
         header.setSectionResizeMode(4, QHeaderView.Fixed)
         header.setSectionResizeMode(5, QHeaderView.Fixed)
-        self.tree_widget.setColumnWidth(1, 160)  # 创建时间加宽
-        self.tree_widget.setColumnWidth(2, 100)  # 大小
+        self.tree_widget.setColumnWidth(1, 160)
+        self.tree_widget.setColumnWidth(2, 100)
         self.tree_widget.setColumnWidth(3, 50)
         self.tree_widget.setColumnWidth(4, 50)
-        self.tree_widget.setColumnWidth(5, 100)  # 播放宽度与大小相同
+        self.tree_widget.setColumnWidth(5, 100)
         for i in range(6):
             self.tree_widget.headerItem().setTextAlignment(i, Qt.AlignCenter)
 
@@ -289,7 +339,7 @@ class MainWindow(QMainWindow):
             item = self.tree_widget.itemAt(pos)
             if item:
                 col = self.tree_widget.columnAt(pos.x())
-                if col in (3, 4):  # 转写、AI 列
+                if col in (3, 4):
                     self.tree_widget.setCursor(Qt.PointingHandCursor)
                     return True
             self.tree_widget.setCursor(Qt.ArrowCursor)
@@ -320,7 +370,6 @@ class MainWindow(QMainWindow):
         self.tree_widget.setColumnWidth(3, 50)
         self.tree_widget.setColumnWidth(4, 50)
         self.tree_widget.setColumnWidth(5, 100)
-        # 文件名列（0）会自动拉伸，无需设置固定宽度
 
     def _create_tree_item(self, item):
         if isinstance(item, VideoItem):
@@ -566,6 +615,12 @@ class MainWindow(QMainWindow):
 
     # ---------- AI 整理 ----------
     def batch_ai_process(self):
+        # 检查 API Key
+        if not API_KEY:
+            QMessageBox.warning(self, "提示", "请先输入 DeepSeek API Key。")
+            self.ensure_api_key()
+            return
+
         selected = self.tree_widget.selectedItems()
         if not selected:
             QMessageBox.information(self, "提示", "请至少选择一个条目进行 AI 整理。")
@@ -603,7 +658,7 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(f"正在批量 AI 整理 {len(tasks)} 个条目...")
 
         self.ai_batch_worker_thread = QThread()
-        self.ai_batch_worker = BatchAIProcessWorker(tasks, DEEPSEEK_API_KEY)
+        self.ai_batch_worker = BatchAIProcessWorker(tasks, API_KEY)
         self.ai_batch_worker.moveToThread(self.ai_batch_worker_thread)
 
         self.ai_batch_worker_thread.started.connect(self.ai_batch_worker.run)
@@ -683,7 +738,7 @@ class MainWindow(QMainWindow):
 
     # ---------- 打开知识库 ----------
     def open_knowledge_browser(self):
-        self.kb_window = KnowledgeBrowserWindow(self, DEEPSEEK_API_KEY)
+        self.kb_window = KnowledgeBrowserWindow(self, API_KEY)
         self.kb_window.setAttribute(Qt.WA_DeleteOnClose)
         self.kb_window.show()
 
