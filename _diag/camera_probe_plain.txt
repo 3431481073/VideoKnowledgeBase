@@ -1,0 +1,5 @@
+t=  0.00  mode = plain
+t=  0.00  html = D:\MyProject\VideoKnowledgeBase\_diag\cam_probe.html 存在=True
+t=  0.09  窗口已创建
+t= 25.16  快照 = {"stage": "ready", "origin": "http://127.0.0.1:56728", "secure": true, "hasMd": true, "hasRec": true, "hasED": true}
+t= 25.17  判定: 卡在 ready

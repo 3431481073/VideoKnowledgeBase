@@ -1,0 +1,39 @@
+t=   0.02  已备份知识树 -> D:\MyProject\VideoKnowledgeBase\_diag\tree.backup.json
+t=   0.02  已把知识树重置成空根（跑完会还原）
+t=   0.03  已清空上次产物
+t=   1.23  界面就绪
+t=   1.23  PASS  0a 走的是真实链路                               
+t=   1.25  PASS  0b 处理面板就绪                                True
+t=   1.84  PASS  0c 待处理列表里有条目                             11
+t=   1.84  待处理第一条 = speech_test
+t=   2.16  已点转写
+t=  13.98  阶段轨迹（行内文字）: 转写 -> 排队 1 -> 加载模型… -> 44% -> 77% -> 整理 0% -> 整理 1% -> 整理 2% -> 整理 4% -> 转写
+t=  13.98  PASS  1a 进度确实在推进（出现多个阶段文字）                     10
+t=  13.98  PASS  1b 出现过「加载模型」段（首次约 11 秒必须有提示）             ['转写', '排队 1', '加载模型…', '44%', '77%', '整理 0%', '整理 1%', '整理 2%']
+t=  13.98  PASS  1c 出现过转写百分比                              ['44%', '77%']
+t=  13.98  PASS  1d 出现过「整理」段（清洗阶段）                        ['整理 0%', '整理 1%', '整理 2%', '整理 4%']
+t=  13.98  PASS  1e 最终进到已完成                               行内最后='转写'
+t=  13.98  PASS  2a raw_transcripts/<base>.txt 存在且非空      239
+t=  13.98  PASS  2b raw_transcripts/<base>_segments.json 是合法分段 11
+t=  14.00  PASS  2c ai_processed/<base>_cleaned.txt 存在且非空 239
+t=  14.00  PASS  2d ai_processed/<base>_meta.json 存在且五字段齐全 ['cleaned_file', 'created_time', 'media_name', 'modified_at', 'title', 'video_path']
+t=  14.00  PASS  2e ★ raw 与 cleaned 内容不同（raw 没被清洗稿覆盖）     
+t=  14.00  raw 前 60 字: 断板反包的核心不是图形本身,而是图形背后资金的意图。所谓十倍图形,指的是同一套形态在多个标地上反复出现,并且每次的赔率都
+t=  14.00  cleaned 前 60 字: 断板反包的核心不是图形本身，而是图形背后资金的意图。所谓十倍图形，指的是同一套形态在多个标的上反复出现，并且每次的赔率都
+t=  14.00  PASS  2f ★ 转写内容与朗读稿吻合（认出关键词）                   ['断板', '反包', '资金', '图形', '位置', '形态']
+t=  14.30  done = {"tab": "all", "total": 2, "inTree": 0, "rendered": 2, "titles": ["speech_test.mp4", "怪物和人类的十大发"]}
+t=  14.30  PASS  3a 条目进了「已完成」                             ['speech_test.mp4', '怪物和人类的十大发']
+t=  14.30  PASS  3b 待处理里没有它了                              ok
+t=  15.42  挂到树的条目 = speech_test
+t=  16.22  PASS  4a 「未添加」列表里能选到它                          speech_test
+t=  16.22  PASS  4b 树上出现了内容节点                             speech_test
+t=  16.55  PASS  4c ★ 点内容节点 -> 右上播放器加载了就绪的媒体              {"url": "media/speech_test.mp4", "readyState": 4, "paused": true, "muted": false, "volume": 0.8, "rotation": 0, "range": null, "loop": false, "loopWatching": fa
+t=  16.55  PASS  4d ★ 左下文章有内容                             1
+t=  16.55  article 快照: {"blocks": 1, "titles": ["speech_test"], "bodies": 1, "scrollMax": 0, "levels": [{"lv": 0, "tag": "textarea", "size": 19, "weight": "700", "indent": 30, "title": "speech_test"}]}
+t=  16.55  点中的节点 kind=video name=speech_test
+t=  16.55  文章正文前 60 字: 断板反包的核心不是图形本身，而是图形背后资金的意图。所谓十倍图形，指的是同一套形态在多个标的上反复出现，并且每次的赔率都
+t=  16.55  PASS  4e ★ 文章正文来自清洗稿（不是原始转写）                   断板反包的核心不是图形本身，而是图形背后资金的意图。所谓十倍图形，指的是同一套形态在多个标的上反复出现，并且每次的赔率都
+t=  16.55  PASS  4f 正文是 LLM 清洗后的版本（「形态」已纠正、「形太」不在）        断板反包的核心不是图形本身，而是图形背后资金的意图。所谓十倍图形，指的是同一套形态在多个标的上反复出现，并且每次的赔率都
+t=  16.55  已还原用户的知识树
+t=  16.55  ---- 结果 ----
+t=  16.55  合计 22 通过 / 0 失败 / 共 22

@@ -1,0 +1,26 @@
+t=  1.14  界面就绪
+t=  1.73  窗口样式: {"found": true, "hwnd": 7145040, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  2.23  已把窗口提到前台
+t=  2.23  源码真值 = {"js/app.js": 33421, "style.css": 21782}
+t=  2.23  注入测试脚本 5070 字节
+t=  4.27  ---- 结果 ----
+t=  4.27  PASS  A0 浮层打开、列表非空                                   12
+t=  4.27  PASS  A1 服务端 payload 有 pending                       12
+t=  4.27  PASS  A2 ★★ 列表画的就是服务端的顺序（前端不重排）                      ["i200bf79acf","i7f91c007a8","ic19f98e2dd"] vs ["i200bf79acf","i7f91c007a8","ic19f98e2dd"]
+t=  4.27  PASS  A3 ★★ 服务端顺序是按 created 严格降序（最新在最上面）             2026-09-28 00:01 > 2026-09-28 00:01 > 2026-09-27 22:24 > 2026-09-27 22:23
+t=  4.27  PASS  A4 顺序不是空的 / 不是全同                               共 12 条；头尾 created = 2026-09-28 00:01 … 2026-09-27 22:23
+t=  4.27  PASS  B1 ★★ 单击行 -> 不选中（左框不动）                         []
+t=  4.27  PASS  B2 ★★ 单击行 -> 右边预览到它                            i200bf79acf
+t=  4.27  PASS  B3 单击不改模式                                      list
+t=  4.27  PASS  B4 0 条选中时 裁剪/合并/转写 全禁用                         {"cropDisabled":true,"mergeDisabled":true,"transcribeDisabled":true,"transcribeLabel":"转写"}
+t=  4.27  PASS  B5 ★★ 点勾选框 -> 选中该条                             ["i200bf79acf"]
+t=  4.27  PASS  B6 1 条选中 -> 裁剪可用                               {"cropDisabled":false,"mergeDisabled":true,"transcribeDisabled":false,"transcribeLabel":"转写"}
+t=  4.27  PASS  B7 点勾选框不改预览                                    i200bf79acf
+t=  4.27  PASS  C1 ★★ 每一行都有 ✕ 按钮                               12/12
+t=  4.27  PASS  C2 每行 ✕ 在「转写」右边                                btn del
+t=  4.27  PASS  C3 ★★ 每个 ✕ 都完整落在可视区内（没有一个被挤出去）                 [{"w":22,"inside":true},{"w":22,"inside":true},{"w":22,"inside":true},{"w":22,"inside":true}] … 共 12 个
+t=  4.27  PASS  C4 ★★ 点 ✕ -> 弹删除确认框                            
+t=  4.27  PASS  C5 确认框写明视频文件会保留                                确定删除「WIN_20260928_00_01_35_Pro」？ · 条目记录和它在导图上的节点会被
+t=  4.27  PASS  C6 ★★ 点「取消」-> 条目还在（没被误删）                       12
+t=  4.27  PASS  C7 取消后条目数没变                                    12 vs 12
+t=  4.28  合计 19 通过 / 0 失败 / 共 19

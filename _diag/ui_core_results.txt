@@ -1,0 +1,73 @@
+t=  1.44  界面就绪
+t=  2.05  窗口样式: {"found": true, "hwnd": 3017254, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  2.55  已把窗口提到前台
+t=  2.55  源码真值 = {"js/app.js": 30810, "style.css": 20871}
+t=  2.55  注入测试脚本 11080 字节
+t=  4.62  ---- 结果 ----
+t=  4.62  PASS  5a  #pageDone 里没有「已完成」标题                       
+t=  4.62  PASS  5b  整页没有「已完成」这四个字                              
+t=  4.62  PASS  6a  tab 字号 <= 11.5px                           11px
+t=  4.62  PASS  6b  tab 按钮高 <= 22px                            22.0
+t=  4.62  PASS  6c  头栏高 <= 34px                                32.0
+t=  4.62  PASS  6d  列表拿到的高度远大于头栏                               236 vs 32.0
+t=  4.62  PASS  U1  右上没有「播放器」标题                                
+t=  4.62  PASS  U2  右上没有顶部横条                                   
+t=  4.62  PASS  U3  右上没有提示小字                                   
+t=  4.62  PASS  U4  左上没有「导图」标题                                 
+t=  4.62  PASS  U5  左上没有顶部横条                                   
+t=  4.62  PASS  U6  左上没有提示文字                                   
+t=  4.62  PASS  U7  左下没有顶部横条                                   
+t=  4.62  PASS  U8  播放器格没有黑底                                   rgb(244, 246, 248)
+t=  4.62  PASS  U9  播放器格里没有常驻文字                                no el
+t=  4.62  PASS  7a  上下比 = 3:2                                  1.500
+t=  4.62  PASS  7b  左右两条横分栏线同一 y                               402 vs 402
+t=  4.62  PASS  7c  横分栏线在上下之间                                  
+t=  4.62  PASS  7d  上排两格等高                                     
+t=  4.62  PASS  7e  下排两格等高                                     
+t=  4.64  PASS  7f  上排左宽 : 右宽 = 2:1                            1.998
+t=  4.64  PASS  7g  竖分栏线贯穿全高                                   
+t=  4.64  PASS  7h  左列两格 x 相同                                  
+t=  4.64  PASS  4a  树上有可播的内容节点                                 4
+t=  4.64  PASS  4b  点内容节点后视频已就绪                                {"url":"media/sample_01.mp4","readyState":4,"paused":true,"muted":false,"volume":0.8,"rotation":0,"range":null,"loop":false,"loopWatching":false,"currentTime":0,"duration":8,"emptyVisible":null}
+t=  4.64  PASS  4c  默认暂停（没有自动播）                                true
+t=  4.64  PASS  4d  停在第一帧（currentTime=0）                       0
+t=  4.64  PASS  4e  readyState>=2 说明首帧已解码                      4
+t=  4.64  PASS  2a  播放键文字确实切了（证明状态真的变过）                        ▶ -> ❚❚
+t=  4.64  PASS  2b  暂停->播放：整条控制栏几何不变                           
+t=  4.64  PASS  2c  播放->暂停：整条控制栏几何不变                           
+t=  4.64  PASS  2d  播放键几何不变                                    
+t=  4.64  PASS  2e  时长标签几何不变                                   
+t=  4.64  PASS  2f  进度轴几何不变                                    
+t=  4.66  PASS  2g  旋转/音量键几何不变                                 
+t=  4.66  PASS  3a  点音量图标弹出滑块                                  false
+t=  4.66  PASS  3b  滑块是竖的（高 > 宽）                               4x92
+t=  4.66  PASS  3c  滑块有 rotate 变换                              
+t=  4.66  PASS  3d  滑块区域高 >= 80px                              92
+t=  4.66  PASS  3e  滑块贴在音量键正上方                                 
+t=  4.66  PASS  3f  横向没有横放的音量条                                 
+t=  4.66  PASS  3g  点外部收起滑块                                    
+t=  4.66  PASS  3h  音量拖到 0 -> 图标变静音                            🔇
+t=  4.66  PASS  3i  音量调回 -> 图标恢复                               
+t=  4.66  PASS  9a  初始角度 0                                     0
+t=  4.66  PASS  9b  点一次 -> 90°                                 90
+t=  4.66  PASS  9c  元素真的带了 rotate(90deg)                       
+t=  4.66  PASS  9d  宽高对调成 舞台高×舞台宽                              343px x 381px
+t=  4.66  PASS  9e  再点 -> 180°                                 
+t=  4.67  PASS  9f  转四次回到 0°                                   
+t=  4.67  PASS  9g  回到 0° 宽高复原                                 
+t=  4.67  PASS  9h  A 已转到 90°                                  
+t=  4.67  PASS  9i  换到另一个视频 -> 角度独立为 0                         
+t=  4.67  PASS  9j  回到 A -> 恢复记忆的 90°                          
+t=  4.67  PASS  9k  角度归零                                       
+t=  4.67  PASS  1a  处理浮层已打开                                    
+t=  4.69  PASS  1b  8 组快捷键全部无副作用                               {"page":"list","boot":true,"settings":false,"vol":false,"dlg":false} -> {"page":"list","boot":true,"settings":false,"vol":false,"dlg":false}
+t=  4.69  PASS  1c  处理浮层仍开着                                    
+t=  4.69  PASS  1d  按 Esc 浮层不关（快捷键已拆）                          
+t=  4.69  PASS  14a 浮层 overlay 不吃点击                            none
+t=  4.69  PASS  14b 面板本身可点                                     auto
+t=  4.69  PASS  14c 浮层外仍命中主界面                                  
+t=  4.69  PASS  R5  浅色背景                                       rgb(238, 240, 243)
+t=  4.69  PASS  R6  无遮挡（无溢出）                                   {"innerW":1226,"innerH":675,"overRight":0,"overBottom":0,"hOverflow":0,"vOverflow":0,"bootHidden":true,"mediaErrorShown":false,"mediaErrorText":""}
+t=  4.69  PASS  R7  启动遮罩已隐藏                                    
+t=  4.69  PASS  R8  没有媒体错误条                                    
+t=  4.69  合计 66 通过 / 0 失败 / 共 66

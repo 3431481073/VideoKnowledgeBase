@@ -27,6 +27,8 @@ from workspace import (
     VideoItem,
     format_size, format_time, sanitize_filename
 )
+# 配置读写统一委托给 config.py —— 这里是配置管道，不是 UI
+from config import load_config as _cfg_load, save_config as _cfg_save
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 RAW_DIR = os.path.join(BASE_DIR, "data", "raw_transcripts")
@@ -42,21 +44,21 @@ API_KEY = ""
 
 
 def load_config():
+    """旧 UI 的 API Key 读取。实际配置由 config.py 管理，这里只是取一个值。"""
     global API_KEY
-    if os.path.exists(CONFIG_FILE):
-        try:
-            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                API_KEY = data.get("api_key", "")
-        except Exception:
-            API_KEY = ""
+    try:
+        API_KEY = _cfg_load().get("clean_api_key", "")
+    except Exception:
+        API_KEY = ""
     return API_KEY
 
 
 def save_config():
+    """合并写回。绝不能整体截断 —— 那会清掉 config.py 管理的其他配置键。"""
     try:
-        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-            json.dump({"api_key": API_KEY}, f, ensure_ascii=False, indent=2)
+        cfg = _cfg_load()
+        cfg["clean_api_key"] = API_KEY
+        _cfg_save(cfg)
     except Exception:
         pass
 

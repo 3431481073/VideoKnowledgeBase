@@ -1,0 +1,10 @@
+t=  3.61  界面就绪
+t=  4.23  窗口样式: {"found": true, "hwnd": 37686354, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  4.77  已把窗口提到前台
+t=  4.77  注入测试脚本 1045 字节
+t=  5.39  ---- 结果 ----
+t=  5.39  PASS  btnProcess                                     {"x":1144,"y":423,"w":75,"h":23}
+t=  5.39  PASS  rowCheckbox                                    {"x":411,"y":271,"w":13,"h":13}
+t=  5.39  PASS  btnCropMode                                    {"x":1108,"y":637,"w":53,"h":29}
+t=  5.39  PASS  page                                           list
+t=  5.39  合计 4 通过 / 0 失败 / 共 4

@@ -1,0 +1,11 @@
+t=  0.00  mode = perm
+t=  0.00  html = D:\MyProject\VideoKnowledgeBase\_diag\cam_probe.html 存在=True
+t=  0.44  已给 EdgeChrome.on_webview_ready 打补丁
+t=  0.44  窗口已创建
+t=  0.94  已订阅 PermissionRequested
+t=  1.55  ★ PermissionRequested kind=Camera uri=http://127.0.0.1:10101/
+t=  1.55     -> 已置 Allow + Handled
+t=  1.56  ★ PermissionRequested kind=Microphone uri=http://127.0.0.1:10101/
+t=  1.56     -> 已置 Allow + Handled
+t=  4.61  快照 = {"stage": "ok", "ms": 3441, "w": 1280, "h": 720, "label": "TranScreen Camera", "videoTracks": 1, "audioTracks": 1, "vp8": true, "h264": true, "mp4": true}
+t=  4.61  判定: ★ getUserMedia 成功（1280x720，音频轨 1）

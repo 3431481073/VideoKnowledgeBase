@@ -1,0 +1,5 @@
+t=  1.66  界面就绪
+t=  2.27  窗口样式: {"found": true, "hwnd": 32834994, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  2.77  已把窗口提到前台
+t=  2.77  源码真值 = {"js/app.js": 28675, "style.css": 21136}
+t=  2.77  注入测试脚本 531 字节

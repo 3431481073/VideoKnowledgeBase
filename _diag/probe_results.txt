@@ -1,0 +1,28 @@
+t=  2.17  === 树的形状 ===
+t=  2.19    depth=0 kind=topic  itemId=None         name=个人空间
+t=  2.19    depth=1 kind=video  itemId=i483b2b68d7  name=怪物和人类的十大发
+t=  2.19  === 右下条目 ===
+t=  2.19    {"tab":"all","total":1,"inTree":0,"rendered":1,"titles":["speech_test.mp4"]}
+t=  2.19  === BUG2: 点根节点后的文章面板 ===
+t=  2.70    blocks=2 bodies=1
+t=  2.70    标题们 = ["个人空间", "怪物和人类的十大发"]
+t=  2.70    正文们 = 
+t=  2.70    hint = 主题 + 全部子节点
+t=  2.70  === 点内容子节点后的文章面板（对照）===
+t=  3.22    blocks=1 bodies=1
+t=  3.22    正文 = 
+t=  3.22  === BUG1: 点右下已完成的条目 ===
+t=  3.83    点到的条目 = speech_test.mp4
+t=  3.83    点之前文章开头 = ''
+t=  3.83    点之后文章开头 = ''
+t=  3.83    文章变了吗 = False
+t=  3.83    条目有没有 click 监听（看 title/class 变化）= row-item
+t=  3.83  === BUG3: 点「打开摄像头」 ===
+t=  6.23    点之前 status = ''
+t=  6.23    点完立刻 status = '摄像头接入下一轮做'
+t=  6.23    1.5 秒后 status = '摄像头接入下一轮做'（被轮询覆盖？）
+t=  6.23    status 元素可见 = 99x18.14583396911621 at 631,628
+t=  6.23  === BUG4: 导入接口现在的返回 ===
+t=  6.23    pick_videos 是弹系统框，无法自动点；只看 start_import 的进度字段是否在 poll 里
+t=  6.25    poll 载荷里有 import 字段 = True
+t=  6.25  === 结束（全程只读，未改任何数据）===

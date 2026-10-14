@@ -18,6 +18,7 @@ from PySide6.QtCore import Qt, QUrl, QSize, Signal
 from PySide6.QtGui import QFont, QColor, QBrush
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
+import proc
 from knowledge_tree import load_tree, save_tree, TreeNode, is_video_mounted, remove_video_from_tree
 from workspace import AI_DIR, RAW_DIR
 
@@ -525,7 +526,7 @@ class KnowledgeBrowserWindow(QMainWindow):
         """打开资源管理器并选中文件（Windows）"""
         try:
             abs_path = os.path.abspath(file_path)
-            subprocess.Popen(['explorer', '/select,', abs_path])
+            proc.popen(['explorer', '/select,', abs_path])
         except Exception as e:
             QMessageBox.warning(self, "错误", f"无法打开文件位置：{e}")
 

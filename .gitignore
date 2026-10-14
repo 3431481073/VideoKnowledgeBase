@@ -6,3 +6,22 @@ tests/
 *.log
 __pycache__/
 *.pyc
+
+# ── PyInstaller 构建产物（2026-10-03 补）──────────────────────
+# build_exe.ps1 会在 build\ 下写这两个目录：
+#   dist_<mode>\   最终产物（exe）
+#   work_<mode>\   中间工作目录
+# 两者都能由 build_exe.ps1 重跑得到，删除前合计约 83 MB，不该进 git。
+#
+# ⚠️ 这里【不能】写成 `build/` ——
+#    build\ 里除了产物，还有一个【构建脚本】build_exe.ps1（手写的、带大量实测注释）。
+#    它不是产物。写成 `build/` 会把脚本一起忽略掉。
+#    （而且 build_exe.ps1 用 $PSScriptRoot 推导项目根、把输出写回 <root>\build\，
+#      所以它必须待在 build\ 里，搬不走。）
+build/dist_*/
+build/work_*/
+
+# PyInstaller 每次构建时由 build_exe.ps1 重新生成的 spec。
+# 里面是写死的绝对路径（D:/MyProject/VideoKnowledgeBase/...），跟具体机器绑定，
+# 不适合入库；build_exe.ps1 每次都会重写它。
+build/*.spec

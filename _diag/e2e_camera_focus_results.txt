@@ -1,0 +1,24 @@
+t=   0.03  相机窗口标题候选 = ('相机', 'Camera')
+t=   2.94  首次 launch = {'ok': True, 'how': 'uri', 'pids': [84584]}
+t=   2.94  PASS  F1a ★ 相机应用起来了（走第 1 级）                                {'ok': True, 'how': 'uri', 'pids': [84584]}
+t=   2.94  PASS  F1b 首次是 uri 方式                                       uri
+t=   2.94  相机窗口 hwnd = 9048234
+t=   2.94  PASS  F2a ★ 能用「ApplicationFrameWindow + 标题」找到相机窗口          9048234
+t=   3.73  抢走之后前台 = 1574654（相机 = 9048234）
+t=   3.73  PASS  F3a 焦点确实不在相机上了（前提成立才有意义）                             前台=1574654 相机=9048234
+t=   4.34  已把相机窗口最小化，IsIconic=True
+t=   4.39  第二次 launch = {'ok': True, 'how': 'already', 'pids': [84584], 'frontOk': True}（耗时 0.05s）
+t=   4.39  PASS  F4a ★ 已经运行时走的是 already 分支                            already
+t=   4.39  PASS  F4b ★ 报告拉前台成功（frontOk=True）                          True
+t=   4.78  拉之后前台 = 9048234
+t=   4.78  PASS  F5a ★★ 相机窗口真的成了前台窗口                                  前台=9048234 相机=9048234
+t=   4.78  PASS  F5b 从最小化恢复了（不再 IsIconic）                             False
+t=   4.78  camera_app 时间线：
+t=   4.78    +  2.532s  launch() 开始；当前 app_running=False
+t=   4.78    +  2.532s  第 1 级：os.startfile(microsoft.windows.camera:)
+t=   4.80    +  2.891s  第 1 级成功，进程出现，耗时 0.36s
+t=   4.80    +  4.313s  launch() 开始；当前 app_running=True
+t=   4.80    +  4.344s  相机应用已在运行 -> 复用；拉前台=True
+t=   4.80  PASS  F6a ★ 时间线里记了「已在运行 / 拉前台」这一笔                          ['第 1 级成功，进程出现，耗时 0.36s', 'launch() 开始；当前 app_running=True', '相机应用已在运行 -> 复用；拉前台=True']
+t=   7.27  ---- 结果 ----
+t=   7.27  合计 9 通过 / 0 失败 / 共 9

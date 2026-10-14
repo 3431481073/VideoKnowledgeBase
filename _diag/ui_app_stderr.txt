@@ -1,0 +1,3 @@
+测试用 HTTP 端口 = 36758
+[app_web] 工作区=(0, 0, 1280, 752)  窗口=1240x712@20,20  最小=960x640
+[app_web] 界面文件=D:\MyProject\VideoKnowledgeBase\webui\index.html  _MEIPASS=None

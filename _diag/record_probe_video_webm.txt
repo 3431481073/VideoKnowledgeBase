@@ -1,0 +1,20 @@
+t=  0.00  mime 请求 = 'video/webm'
+t=  1.09  页面就绪
+t=  1.11  已开始录制 6 秒，mime='video/webm'
+t=  1.50  ★ PermissionRequested kind=Microphone
+t=  1.50  ★ PermissionRequested kind=Camera
+t=  4.98  分片 0 诊断: len=4 头='Gg==' 尾='Gg=='
+t=  4.98          非法字符: []
+t=  4.98          第一个 '=' 出现在下标 2（长度 4）
+t=  6.02  分片 1 诊断: len=105080 头='Rd+jn0KGgQFC94EBQvKBBELzgQhCgoR3ZWJtQoeB' 尾='1Z+JVs3b+Kli3ARtVrfInujIwDV4l+euSh7c0ACj'
+t=  6.02          非法字符: []
+t=  6.02          第一个 '=' 出现在下标 -1（长度 105080）
+t=  8.09  rec_done 进入: _part='D:\\MyProject\\VideoKnowledgeBase\\_diag\\rec_out\\p1.part' 存在=True 大小=126305  pid=73280
+t=  8.09    目录内容: ['p1.part', 'rec.mp4']
+t=  8.09  落盘完成 rec.webm  size=126305 (JS 报 126305) mime=video/webm;codecs=vp8,opus
+t=  8.34  最终快照 = {"stage": "verified", "origin": "http://127.0.0.1:59872", "secure": true, "mime": "video/webm", "gumMs": 874, "realMime": "video/webm", "sent": 4, "lastChunkBytes": 24354, "apiOk": 3, "totalBytes": 126305, "chunkCount": 4, "settled": true, "produced": 4, "sentCount": 4, "saved": {"path": "D:\\MyProject\\VideoKnowledgeBase\\_diag\\rec_out\\rec.webm", "size": 126305}, "playW": 1280, "playH": 720, "playDur": null}
+t=  8.34  分片统计: 次数=4 总字节=126305 单条最大(base64)=105080
+t=  8.34  传输耗时 = 3.00s
+t=  8.45  ★ ffprobe 认了：format=matroska,webm duration=None size=126305
+t=  8.45     stream 0: opus NonexNone rate=0/0
+t=  8.45     stream 1: vp8 1280x720 rate=0/0

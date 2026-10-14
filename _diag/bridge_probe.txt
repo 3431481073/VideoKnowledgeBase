@@ -1,0 +1,16 @@
+t=  1.06  页面就绪，开始 [1024, 65536, 204800, 1048576, 4194304]
+t=  1.08  n=1024     期望长度约=1368     实收长度=1368     头='CzBVep/E6Q4zWH2ix+wRNluA' 尾='u+AFKk90mb7jCC1Sd5zB5g=='
+t=  1.08           解码 成功 len=1024  
+t=  1.08  n=65536    期望长度约=87384    实收长度=87384    头='CzBVep/E6Q4zWH2ix+wRNluA' 尾='u+AFKk90mb7jCC1Sd5zB5g=='
+t=  1.08           解码 成功 len=65536  
+t=  1.09  n=204800   期望长度约=273068   实收长度=273068   头='CzBVep/E6Q4zWH2ix+wRNluA' 尾='lrvgBSpPdJm+4wgtUnecweY='
+t=  1.09           解码 成功 len=204800  
+t=  1.16  n=1048576  期望长度约=1398104  实收长度=1398104  头='CzBVep/E6Q4zWH2ix+wRNluA' 尾='u+AFKk90mb7jCC1Sd5zB5g=='
+t=  1.16           解码 成功 len=1048576  
+t=  1.45  n=4194304  期望长度约=5592408  实收长度=5592408  头='CzBVep/E6Q4zWH2ix+wRNluA' 尾='u+AFKk90mb7jCC1Sd5zB5g=='
+t=  1.45           解码 成功 len=4194304  
+t=  1.70  JS 侧回报: {"in": 1024, "outLen": 1368, "r": {"ok": true, "len": 1368, "bad": [], "decoded": 1024, "err": null}, "ms": 7}
+t=  1.70  JS 侧回报: {"in": 65536, "outLen": 87384, "r": {"ok": true, "len": 87384, "bad": [], "decoded": 65536, "err": null}, "ms": 6}
+t=  1.70  JS 侧回报: {"in": 204800, "outLen": 273068, "r": {"ok": true, "len": 273068, "bad": [], "decoded": 204800, "err": null}, "ms": 12}
+t=  1.70  JS 侧回报: {"in": 1048576, "outLen": 1398104, "r": {"ok": true, "len": 1398104, "bad": [], "decoded": 1048576, "err": null}, "ms": 42}
+t=  1.70  JS 侧回报: {"in": 4194304, "outLen": 5592408, "r": {"ok": true, "len": 5592408, "bad": [], "decoded": 4194304, "err": null}, "ms": 157}

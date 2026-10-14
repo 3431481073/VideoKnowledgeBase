@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>视频知识库 · 工作台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid" id="grid">
+
+  <!-- ============ 左上：导图（无标题、无横条） ============ -->
+  <section class="pane" id="paneTree" style="grid-area:tree">
+    <div class="pane-body graph-viewport" id="graphViewport">
+      <div class="graph-canvas" id="graphCanvas">
+        <svg id="edges"></svg>
+        <div id="nodes"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider divider-v" id="divV" title="拖动调整左右比例"></div>
+
+  <!-- ============ 右上：播放器（无标题、无横条、无黑底、无文字） ============ -->
+  <section class="pane" id="panePlayer" style="grid-area:done">
+    <div class="pane-body player-wrap">
+      <div class="video-stage" id="playerStage">
+        <video id="playerVideo" playsinline preload="auto"></video>
+      </div>
+      <div class="player-bar">
+        <button id="btnPlay" class="btn icon" title="播放 / 暂停">▶</button>
+        <input id="seek" class="range" type="range" min="0" max="0" step="0.01" value="0">
+        <span id="timeLabel" class="time">00:00 / 00:00</span>
+        <button id="btnRotate" class="btn icon" title="旋转 90°">⟳</button>
+        <div class="vol-wrap">
+          <button id="btnMute" class="btn icon" title="音量">🔊</button>
+          <div class="vol-pop hidden" id="volPop">
+            <input id="vol" class="range vrange" type="range" min="0" max="1" step="0.01" value="0.8">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider divider-h" id="divHL" title="拖动调整上下比例"></div>
+  <div class="divider divider-h" id="divHR" title="拖动调整上下比例"></div>
+
+  <!-- ============ 左下：文章（无横条） ============ -->
+  <section class="pane" id="paneContent" style="grid-area:content">
+    <div class="pane-body scroll article" id="article"></div>
+  </section>
+
+  <!-- ============ 右下：已完成条目 ============ -->
+  <section class="pane" id="paneDone" style="grid-area:pending">
+    <div class="stack">
+
+      <div class="stack-page" id="pageDone">
+        <header class="pane-head">
+          <nav class="tabs" id="doneTabs">
+            <button data-tab="all" class="active">全部</button>
+            <button data-tab="in">已添加到树</button>
+            <button data-tab="out">未添加</button>
+          </nav>
+          <span class="spacer"></span>
+          <button id="btnProcess" class="btn primary">处理视频…</button>
+          <button id="btnGear" class="btn icon" title="设置">⚙</button>
+        </header>
+        <div class="pane-body scroll" id="doneList"></div>
+      </div>
+
+      <div class="stack-page hidden" id="pageSettings">
+        <header class="pane-head">
+          <span class="pane-title">设置</span>
+          <span class="spacer"></span>
+          <button id="btnSetBack" class="btn">← 返回</button>
+        </header>
+        <div class="pane-body scroll">
+          <div class="form">
+            <label class="field"><span>清洗 URL</span>
+              <input id="setUrl" type="text" spellcheck="false"></label>
+            <label class="field"><span>清洗 Model</span>
+              <input id="setModel" type="text" spellcheck="false"></label>
+            <label class="field"><span>清洗 API Key</span>
+              <input id="setKey" type="text" spellcheck="false"></label>
+            <label class="field"><span>清洗提示词</span>
+              <textarea id="setPrompt" rows="9" spellcheck="false"></textarea></label>
+          </div>
+          <div class="form-foot">
+            <button id="btnSetReset" class="btn">恢复默认</button>
+            <span class="spacer"></span>
+            <button id="btnSetSave" class="btn primary">保存</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ 处理浮层（非模态，可拖动）：列表 / 裁剪 / 合并 三个独立页面 ============ -->
+<div id="procOverlay" class="overlay hidden">
+  <div class="proc-panel" id="procPanel">
+    <header class="proc-head" id="procHead">
+      <span class="pane-title" id="procTitle">处理视频</span>
+      <span class="pane-hint" id="procHint">点某一条裁剪 · 勾选多条合并</span>
+      <span class="spacer"></span>
+      <button id="procClose" class="btn icon" title="关闭">✕</button>
+    </header>
+
+    <div class="proc-body">
+
+      <!-- ---------- 模式一：常态（列表 + 预览） ---------- -->
+      <div class="proc-page" id="pageProcList">
+        <aside class="proc-left">
+          <div class="proc-tools">
+            <button id="procImport" class="btn">＋ 导入视频</button>
+            <button id="procCamera" class="btn">● 摄像头</button>
+            <!-- 摄像头的附属控件。**只有一个**：调起失败时才出现的 ffmpeg 降级入口。
+                 没有「取消等待」—— 后台等录制文件这件事不该让用户操心，
+                 界面上也不该出现任何"等待中/监视中"的常驻状态。 -->
+            <button id="camFallback" class="btn tiny hidden"
+                    title="ffmpeg 直接抓摄像头（会独占麦克风）">ffmpeg 直录</button>
+            <input id="camSeconds" class="cam-secs hidden" type="number"
+                   min="1" max="600" value="10" title="降级录制秒数">
+          </div>
+          <div class="proc-list" id="procList"></div>
+          <div class="proc-pickbar">
+            <label class="chk-all" title="全选 / 全不选">
+              <input type="checkbox" id="chkAll"><span>全选</span></label>
+            <span class="spacer"></span>
+            <span class="muted" id="pickCount">已选 0 条</span>
+          </div>
+        </aside>
+
+        <section class="proc-preview">
+          <div class="video-stage" id="listStage">
+            <video id="listVideo" playsinline preload="auto"></video>
+            <div class="player-empty" id="listEmpty">点左边列表里的视频预览</div>
+          </div>
+          <div class="player-bar">
+            <button id="listPlay" class="btn icon" title="播放 / 暂停">▶</button>
+            <input id="listSeek" class="range" type="range" min="0" max="0" step="0.01" value="0">
+            <span id="listTime" class="time">00:00 / 00:00</span>
+            <button id="listRotate" class="btn icon" title="旋转 90°">⟳</button>
+            <div class="vol-wrap">
+              <button id="listMute" class="btn icon" title="音量">🔊</button>
+              <div class="vol-pop hidden" id="listVolPop">
+                <input id="listVol" class="range vrange" type="range" min="0" max="1" step="0.01" value="0.8">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="proc-actions">
+          <span class="muted" id="procCount">共 0 条</span>
+          <div class="import-wrap" id="importWrap">
+            <span class="muted" id="importText"></span>
+            <div class="bar import-bar"><div class="bar-fill" id="importFill"></div></div>
+          </div>
+          <div class="bar proc-bar-inline"><div class="bar-fill" id="procBar"></div></div>
+          <span class="pane-hint" id="procStatus"></span>
+          <span class="spacer"></span>
+          <button id="btnCropMode" class="btn" disabled>裁剪</button>
+          <button id="btnMergeMode" class="btn" disabled>合并</button>
+          <button id="btnTranscribeSel" class="btn primary" disabled>转写</button>
+        </div>
+      </div>
+
+      <!-- ---------- 模式二：裁剪（选中 1 条进入） ---------- -->
+      <div class="proc-page hidden" id="pageProcTrim">
+        <div class="proc-full">
+          <div class="proc-pagehead">
+            <span class="pane-title" id="trimTitle">裁剪</span>
+            <span class="pane-hint">拖把手选区间 · 点播放只在区间内循环</span>
+          </div>
+
+          <div class="proc-preview">
+            <div class="video-stage small" id="trimStage">
+              <video id="trimVideo" playsinline preload="auto"></video>
+              <div class="player-empty" id="trimEmpty">没有可裁剪的视频</div>
+            </div>
+            <div class="player-bar">
+              <button id="trimPlay" class="btn icon" title="播放 / 暂停">▶</button>
+              <input id="trimSeek" class="range" type="range" min="0" max="0" step="0.01" value="0">
+              <span id="trimTime" class="time">00:00 / 00:00</span>
+              <button id="trimRotate" class="btn icon" title="旋转 90°">⟳</button>
+              <div class="vol-wrap">
+                <button id="trimMute" class="btn icon" title="音量">🔊</button>
+                <div class="vol-pop hidden" id="trimVolPop">
+                  <input id="trimVol" class="range vrange" type="range" min="0" max="1" step="0.01" value="0.8">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-title">裁剪区间 <span class="muted" id="trimLabel">—</span></div>
+            <div class="trim-track" id="trimTrack">
+              <div class="trim-sel" id="trimSel"></div>
+              <div class="trim-h" id="trimA" title="起点"></div>
+              <div class="trim-h" id="trimB" title="终点"></div>
+            </div>
+          </div>
+
+          <div class="proc-foot">
+            <button id="btnSaveClip" class="btn">保存为新片段</button>
+            <button id="btnOverwrite" class="btn primary">覆盖原视频</button>
+            <span class="spacer"></span>
+            <span class="pane-hint" id="trimStatus"></span>
+            <button id="trimBack" class="btn">返回</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------- 模式三：合并（选中 ≥2 条进入） ---------- -->
+      <div class="proc-page hidden" id="pageProcMerge">
+        <div class="proc-full">
+          <div class="proc-pagehead">
+            <span class="pane-title" id="mergeTitle">合并</span>
+            <span class="pane-hint">拖 ⠿ 改顺序 · 点播放按顺序播</span>
+            <span class="spacer"></span>
+            <span class="muted" id="mergeCount">0 段</span>
+          </div>
+
+          <ol class="merge-list" id="mergeList"></ol>
+
+          <div class="proc-preview">
+            <div class="video-stage small" id="mergeStage">
+              <video id="mergeVideo" playsinline preload="auto"></video>
+              <div class="player-empty" id="mergeEmpty">点播放按顺序播放</div>
+            </div>
+            <div class="player-bar">
+              <button id="mergePlay" class="btn icon" title="播放 / 暂停">▶</button>
+              <input id="mergeSeek" class="range" type="range" min="0" max="0" step="0.01" value="0">
+              <span id="mergeTime" class="time">00:00 / 00:00</span>
+              <button id="mergeRotate" class="btn icon" title="旋转 90°">⟳</button>
+              <div class="vol-wrap">
+                <button id="mergeMute" class="btn icon" title="音量">🔊</button>
+                <div class="vol-pop hidden" id="mergeVolPop">
+                  <input id="mergeVol" class="range vrange" type="range" min="0" max="1" step="0.01" value="0.8">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proc-foot">
+            <button id="btnExportMerge" class="btn primary">导出为合并视频</button>
+            <span class="spacer"></span>
+            <span class="pane-hint" id="mergeStatus"></span>
+            <button id="mergeBack" class="btn">返回</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ 自建弹层（WebView2 默认禁用 prompt/alert） ============ -->
+<dialog id="dlgText">
+  <h3 id="dlgTextTitle">新建节点</h3>
+  <input id="dlgTextInput" type="text" spellcheck="false">
+  <div class="dlg-foot">
+    <button id="dlgTextCancel" class="btn">取消</button>
+    <button id="dlgTextOk" class="btn primary">确定</button>
+  </div>
+</dialog>
+
+<!-- 【已删】原来这里有个「新建节点：文字节点 / 内容节点 二选一」的弹框。
+     两个按钮长得一模一样、区别只在灰色小字里，用的还是数据模型的词
+     （kind=topic / video），用户看不出为什么要选。
+     现在改成两个名字自解释的动作，在树的右键菜单里：
+     「新建分组」/「加入视频…」—— 点哪个干哪个，界面上不再有"节点类型"。 -->
+
+<!-- 双击空白 = 添加（二选一）。
+     **和以前那个"节点类型二选一"不是一回事**：以前是两个长得一模一样的方块
+     （文字节点 / 内容节点），区别只在灰色小字里、用的是数据模型的词，
+     用户看不出为什么要选（那是被删掉的原因）。
+     现在每一行是一个**动词**（新建分组 / 加入视频），带图标 + 一句白话说明，
+     标题里还写清"加到哪儿"。 -->
+<dialog id="dlgAdd">
+  <h3>添加</h3>
+  <p class="muted" id="dlgAddWhere">加到顶层</p>
+  <div class="add-list">
+    <button id="dlgAddGroup" class="add-row">
+      <span class="add-ico">📁</span>
+      <span class="add-txt"><strong>新建分组</strong>
+        <small>一个纯标题，用来归类</small></span>
+    </button>
+    <button id="dlgAddVideo" class="add-row">
+      <span class="add-ico">🎬</span>
+      <span class="add-txt"><strong>加入视频</strong>
+        <small>从「已完成」里挑一个挂上来</small></span>
+    </button>
+  </div>
+  <div class="dlg-foot">
+    <button id="dlgAddCancel" class="btn">取消</button>
+  </div>
+</dialog>
+
+<dialog id="dlgPick">
+  <h3>加入视频</h3>
+  <p class="muted">只列还没加入导图的条目</p>
+  <input id="dlgPickSearch" type="text" placeholder="搜索标题…" spellcheck="false">
+  <div class="pick-list" id="dlgPickList"></div>
+  <div class="dlg-foot">
+    <button id="dlgPickCancel" class="btn">取消</button>
+  </div>
+</dialog>
+
+<dialog id="dlgConfirm">
+  <h3 id="dlgConfirmTitle">确认</h3>
+  <p id="dlgConfirmMsg"></p>
+  <div class="dlg-foot">
+    <button id="dlgConfirmCancel" class="btn">取消</button>
+    <button id="dlgConfirmOk" class="btn danger">删除</button>
+  </div>
+</dialog>
+
+<ul id="ctxMenu" class="ctx hidden"></ul>
+<div id="toast" class="toast hidden"></div>
+<div id="mediaError" class="media-error hidden"></div>
+<div id="boot" class="boot"><span>正在启动界面…</span></div>
+
+<!-- 摄像头**没有浮层了**：点按钮直接调起系统相机应用。
+     提示走 toast + 处理面板的状态行，进度复用importWrap那条导入进度条。
+     （原 #camOverlay 已删 —— 用户要求点一下就直接弹出相机，不要中间层。） -->
+
+<script src="js/bridge.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/player.js"></script>
+<script src="js/process_dialog.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

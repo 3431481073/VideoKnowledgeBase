@@ -1,0 +1,30 @@
+# VideoKnowledgeBase 的服务声明
+#
+# 结论：没有独立常驻服务。
+#
+# 理由：
+#   1. 没有进程会自己起来 —— 没有自启、没有守护、没有计划任务。
+#   2. 没有对外提供的服务 —— 用户双击启动，关窗即退出。
+#   3. 崩了重开即可。
+#
+# ⚠️ 但运行时有一个【pywebview 内部的 HTTP 服务器】(127.0.0.1:随机高位端口)。
+#    它不是本项目起的服务 —— 是 pywebview / WebView2 的内部机制。
+#    存在的理由：WebView2 拒绝从 file:// 页面加载 file:///D:/....mp4
+#    （MEDIA_ELEMENT_ERROR: Media load rejected by URL safety check），
+#    必须走同源 HTTP。而那个内置服务器只供窗口 URL 所在的目录（webui/），
+#    所以才有了 webui\media → data\media 那个目录联接。
+#    → 故不记成服务条目。详见 docs/service.md。
+#
+# ⚠️ 这个应用是【单实例】的（src/single_instance.py）——
+#    两个实例会同时写 data/workspace.json 互相覆盖。
+#    单实例闸不是服务，是一条运行时约束。
+#
+# ⚠️ 还有一个内部的串行任务队列（src/jobs.py 的 JobQueue，daemon 线程），
+#    关窗即随进程退出。不监听端口、不对外暴露，不是服务。
+#
+# ⚠️ 没有外部前置条件：不依赖任何别的项目在跑。
+#    （但它依赖项目外的资源：D:\models\ 的 Whisper 模型 + ffmpeg，见 docs/deps.md）
+#
+# 详见 docs/service.md
+
+services: []

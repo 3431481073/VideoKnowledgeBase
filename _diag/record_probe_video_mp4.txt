@@ -1,0 +1,19 @@
+t=  0.00  mime 请求 = 'video/mp4'
+t=  1.05  页面就绪
+t=  1.06  已开始录制 6 秒，mime='video/mp4'
+t=  1.50  ★ PermissionRequested kind=Microphone
+t=  1.50  ★ PermissionRequested kind=Camera
+t=  8.05  分片 0 诊断: len=48 头='AAAAJGZ0eXBpc29tAAACAGlzb21pc282aXNvMnZw' 尾='eXBpc29tAAACAGlzb21pc282aXNvMnZwMDltcDQx'
+t=  8.05          非法字符: []
+t=  8.05          第一个 '=' 出现在下标 -1（长度 48）
+t=  8.06  分片 1 诊断: len=127744 头='AAACXW1vb3YAAAB4bXZoZAEAAAAAAAAA5t7eTwAA' 尾='rSPBkxoFGievSM3mRqLzum3q+aFopRhPzkKN4Q=='
+t=  8.06          非法字符: []
+t=  8.06          第一个 '=' 出现在下标 127742（长度 127744）
+t=  8.14  rec_done 进入: _part='D:\\MyProject\\VideoKnowledgeBase\\_diag\\rec_out\\p1.part' 存在=True 大小=95842  pid=19620
+t=  8.14    目录内容: ['p1.part']
+t=  8.16  落盘完成 rec.mp4  size=95842 (JS 报 95842) mime=video/mp4;codecs=vp9,opus
+t=  8.30  最终快照 = {"stage": "verified", "origin": "http://127.0.0.1:27841", "secure": true, "mime": "video/mp4", "gumMs": 982, "realMime": "video/mp4", "totalBytes": 95842, "chunkCount": 2, "sent": 2, "lastChunkBytes": 95806, "apiOk": 1, "settled": true, "produced": 2, "sentCount": 2, "saved": {"path": "D:\\MyProject\\VideoKnowledgeBase\\_diag\\rec_out\\rec.mp4", "size": 95842}, "playW": 0, "playH": 0, "playDur": 5.9}
+t=  8.30  分片统计: 次数=2 总字节=95842 单条最大(base64)=127744
+t=  8.30  传输耗时 = 0.02s
+t=  8.39  ★ ffprobe 认了：format=mov,mp4,m4a,3gp,3g2,mj2 duration=5.900000 size=95842
+t=  8.39     stream 0: opus NonexNone rate=0/0

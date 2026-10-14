@@ -1,0 +1,1 @@
+pid=83252 ppid=80992 exe=D:\MyProject\VideoKnowledgeBase\venv\Scripts\pythonw.exe argv=['_diag\\pidtest.py']

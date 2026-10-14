@@ -1,0 +1,157 @@
+t=  1.08  界面就绪
+t=  1.69  窗口样式: {"found": true, "hwnd": 3998616, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  2.19  已把窗口提到前台
+t=  2.19  源码真值 = {"js/app.js": 33926, "style.css": 21924}
+t=  2.19  注入测试脚本 30922 字节
+t= 17.34  ---- 结果 ----
+t= 17.34  PASS  N1a 进浮层默认是常态                                   list
+t= 17.34  PASS  N1b 常态页有列表和预览                                  
+t= 17.34  PASS  N1c 列表有多条                                      5
+t= 17.34  PASS  N1d 0 条：裁剪禁用                                   
+t= 17.34  PASS  N1e 0 条：合并禁用                                   
+t= 17.34  PASS  N1f 0 条：转写禁用                                   
+t= 17.34  PASS  N2a0 起始：没选中、也没预览                               0/null
+t= 17.34  PASS  N2a ★ 单击行 -> **不**选中（左框不动）                     []
+t= 17.34  PASS  N2b ★ 单击行 -> 右边预览该条                            i26
+t= 17.34  PASS  N2c 单击行 -> 仍停在常态                               list
+t= 17.34  PASS  N2d 0 条选中 -> 裁剪仍禁用                             {"cropDisabled":true,"mergeDisabled":true,"transcribeDisabled":true,"transcribeLabel":"转写"}
+t= 17.34  PASS  N2e 0 条选中 -> 合并仍禁用                             
+t= 17.34  PASS  N2f 0 条选中 -> 转写仍禁用                             
+t= 17.34  PASS  N2g ★ 再点同一行 -> 选中仍然是空                          0
+t= 17.34  PASS  N2h 预览还停在同一条                                   i26
+t= 17.34  PASS  N2i ★ 点勾选框 -> 选中该条                             ["i26"]
+t= 17.34  PASS  N2j ★ 1 条选中 -> 裁剪可用                            {"cropDisabled":false,"mergeDisabled":true,"transcribeDisabled":false,"transcribeLabel":"转写"}
+t= 17.34  PASS  N2k 1 条选中 -> 合并仍禁用                             
+t= 17.34  PASS  N2l 1 条选中 -> 转写可用                              
+t= 17.34  PASS  N2m 点勾选框不改预览                                   i26
+t= 17.34  PASS  N2n 取消勾选 -> 裁剪又禁用                              
+t= 17.34  PASS  N3a 点勾选框 -> 选中 +1                              
+t= 17.34  PASS  N3b ★ 点勾选框 -> 预览一字不变                           media/sample_01.mp4 vs media/sample_01.mp4
+t= 17.34  PASS  N3c 点勾选框 -> 预览的条目也没变                           
+t= 17.34  PASS  N6a 2 条：裁剪转禁用                                  
+t= 17.34  PASS  N6b 2 条：合并可用                                   
+t= 17.34  PASS  N6c 2 条：转写可用且显示条数                              转写 2 条
+t= 17.34  PASS  N6d ≥2 条：裁剪始终禁用                                
+t= 17.34  PASS  N7a 清空后全选框未勾选                                  
+t= 17.34  PASS  N7b ★ 全选 -> 所有条目都选中                            5/5
+t= 17.34  PASS  N7c 全选后全选框是勾上的                                 
+t= 17.34  PASS  N7d 全选后合并可用                                    
+t= 17.34  PASS  N7e ★ 全选后裁剪禁用（≥2 条）                            
+t= 17.34  PASS  N7f ★ 再点全选 -> 全部取消                             0
+t= 17.34  PASS  N7g 全不选后三个按钮都禁用                                
+t= 17.34  PASS  N8a 双击视频名 -> 弹出改名框                             
+t= 17.34  PASS  N8b ★ 改名生效并显示在列表里                              新手做T看懂这个信号，少走十年弯路【改名】
+t= 17.34  PASS  C1a 选中 1 条 + 点裁剪 -> 进裁剪模式                      trim
+t= 17.36  PASS  C1b 裁剪页没有合并列表                                  
+t= 17.36  PASS  C1c 裁剪页没有导出按钮                                  
+t= 17.36  PASS  C1d 标题写清了裁的是哪一条                                裁剪：新手做T看懂这个信号，少走十年弯路【改名】
+t= 17.36  PASS  C1e 底部三件套都在                                    
+t= 17.36  PASS  C2a 拿到时长                                       8
+t= 17.36  PASS  C2b 初始区间 = 整条                                  {"a":0,"b":8}
+t= 17.36  PASS  C3a 拖 A 把手 -> 起点落到 30%                         2.40 vs 2.40
+t= 17.36  PASS  C3b ★ 拖动时预览实时 seek 到该帧                         2.4 vs 2.3965514928067178
+t= 17.36  PASS  C4a 区间已同步给播放器                                  {"a":1,"b":2}
+t= 17.36  PASS  C4b 播放器处于循环模式                                  
+t= 17.36  PASS  C4c 播放中没有跳出区间上界（<= 2.35）                       2.000
+t= 17.36  PASS  C4d 播放中没有跌出区间下界（>= 0.85）                       1.010
+t= 17.36  PASS  C4e 全程没有停下来                                    false
+t= 17.36  PASS  C4f ★ 确实发生了循环回卷（>=1 次）                         2 次；样本 100
+t= 17.36  PASS  C4g ★ 暂停时能拖到区间外且不被拉回                           6
+t= 17.36  PASS  C5a 保存为新片段 -> 列表多一条                            5 -> 6
+t= 17.36  PASS  C5b 新片段带「片段」标签                                 片段 1.5–4.5s
+t= 17.36  PASS  C5c 保存后自动回常态页                                  list
+t= 17.36  PASS  C6a 覆盖原视频 -> 条目数不变                             6 -> 6
+t= 17.36  PASS  C6b 出现「待覆盖」标签                                  片段 1.5–4.5s | 待覆盖 2.0–5.0s
+t= 17.36  PASS  C7  点「返回」回常态页                                  list
+t= 17.36  PASS  M0a 从裁剪退出后合并状态为空                               0
+t= 17.36  PASS  M0b 勾选 3 条 -> 裁剪禁用                             
+t= 17.36  PASS  M0c 勾选 3 条 -> 合并可用                             
+t= 17.36  PASS  M1a 进入合并模式                                     merge
+t= 17.36  PASS  M1b 合并列表 3 段                                   3
+t= 17.36  PASS  M1c 每段都有有效区间                                   
+t= 17.36  PASS  M1d 合并页没有时间轴                                   
+t= 17.36  PASS  M1e 合并页没有「覆盖原视频」                               
+t= 17.36  PASS  M1f 合并页底部是 导出 / 返回                             
+t= 17.36  PASS  M2a 往下拖 -> 顺序真的变了                              新手做T看懂这个信号，少走十年弯路【改名】>新手做T看懂这个信号，少走十年弯路【改名】_clip>主力都怕你看懂的抄底信号
+t= 17.36  PASS  M2b 只挪一格（与后一行交换）                               新手做T看懂这个信号，少走十年弯路【改名】>新手做T看懂这个信号，少走十年弯路【改名】_clip>主力都怕你看懂的抄底信号
+t= 17.36  PASS  M2c 末行拖到最前 -> 整体右移一位                           主力都怕你看懂的抄底信号>新手做T看懂这个信号，少走十年弯路【改名】>新手做T看懂这个信号，少走十年弯路【改名】_clip
+t= 17.36  PASS  M3a 点播放键 -> 顺序预览启动                             {"url":"media/sample_04.mp4","readyState":4,"paused":false,"muted":false,"volume":0.8,"rotation":0,"range":{"a":0,"b":8},"loop":false,"loopWatching":false,"currentTime":0.03,"duration":8,"emptyVisible":false}
+t= 17.36  PASS  M3b 播的是列表里的第一段                                 media/sample_04.mp4 vs media/sample_04.mp4
+t= 17.36  PASS  M3c 合并预览不是循环模式                                 
+t= 17.36  PASS  M3d 顺序播放标记为进行中                                 
+t= 17.36  PASS  M4a 导出后列表多一条                                   6 -> 7
+t= 17.36  PASS  M4b 新条目带「合并 N 段」标签                             合并 3 段 | 片段 1.5–4.5s | 待覆盖 2.0–5.0s
+t= 17.36  PASS  M5a 「返回」回常态页                                   list
+t= 17.36  PASS  M5b 退出合并后合并页隐藏                                 
+t= 17.36  PASS  M5c 退出合并后裁剪页也隐藏                                
+t= 17.36  PASS  I1a 常态页看不到裁剪时间轴                                
+t= 17.36  PASS  I1b 常态页看不到合并列表                                 
+t= 17.36  PASS  I1c 常态页只有列表预览可见                                
+t= 17.36  PASS  I2a 进裁剪后常态页与合并页都隐藏                             
+t= 17.36  PASS  I2b ★ 进裁剪不改变合并数据                               
+t= 17.36  PASS  I3a 裁剪退出后回到常态                                  
+t= 17.36  PASS  I3b 常态页选中状态保留                                  1
+t= 17.36  PASS  T1a 0 条时底部转写禁用                                 
+t= 17.36  PASS  T1b 1 条时底部转写可用                                 
+t= 17.36  PASS  T1c ★ 行内「转写」不改变选中                              
+t= 17.36  PASS  T1d ★ 行内「转写」不改变预览                              i26 -> i26
+t= 17.36  PASS  T1e 转写真的启动了                                    开始转写：合并_20261013_155318
+t= 17.36  PASS  T1f 进度条在走                                      18%
+t= 17.36  PASS  T2a ★ 底部「转写」批量入队                               已提交 2 条，队列串行处理中
+t= 17.38  PASS  ORD1 ★ 列表按服务端给的顺序画（前端不重排）                      ["i28","i27","i26"] vs ["i28","i27","i26"]
+t= 17.38  PASS  DEL1 ★ 每行都有「✕」删除按钮                             7/7
+t= 17.38  PASS  DEL2 删除按钮在转写按钮右边                               btn del
+t= 17.38  PASS  DEL2b ★ 每个 ✕ 都有真实尺寸且完整落在可视区内（没被挤出容器）           0 个不合格；第一个 25.14583396911621；容器 231px
+t= 17.38  PASS  DEL2c ★★ ✕ 用的是「危险色」常显（不是那种扫不见的淡灰）              实际 rgb(214, 69, 69) / 应为 rgb(214, 69, 69)
+t= 17.38  PASS  DEL2d ★★ ✕ 的颜色**不等于** .muted 那个淡灰（第一版就是栽在这）    rgb(214, 69, 69) vs muted rgb(152, 162, 179)
+t= 17.38  PASS  DEL3 ★★ 点 ✕ 不弹确认框（点了就生效）                       
+t= 17.38  PASS  DEL4 ★★ 点一下就当场从列表消失（不用等二次确认）                   6 vs 7
+t= 17.38  PASS  DEL5 其余条目一条没少                                  6
+t= 17.38  PASS  DEL6 ★ 少的正是那一条，别的一条没动                          ["i27","i26","i25","i24","i23","i22"] vs ["i27","i26","i25","i24","i23","i22"]
+t= 17.38  PASS  DEL7 ★ 状态行给了回执（不是静默消失）                         已从待处理列表移除「合并_20261013_155318」（导图和视频都没动）
+t= 17.38  PASS  DEL7b 点完之后没有任何 dialog 开着                       
+t= 17.38  PASS  DEL9 ★★ 出队之后记录仍然存在（不是把条目删了）                    
+t= 17.38  PASS  DEL9b ★★ 再出队一次仍然 ok（幂等，记录一直在）                  
+t= 17.38  PASS  DEL9c ★★ 反证：不存在的 iid -> item-missing（上面两条才有意义） "item-missing"
+t= 17.38  PASS  T4a ★ 导入进度文字含 文件名 + 分数 + 百分比                   复制中 测试视频.mp4（1/3）42%
+t= 17.38  PASS  T4b ★ 导入进度条可见                                  false
+t= 17.38  PASS  T4c ★ 列表里有「正在导入…」占位行                           1
+t= 17.38  PASS  T4d 占位行里写了进度                                   正在导入… 测试视频.mp4（1/3）
+t= 17.38  PASS  T4e 导入结束后进度条收起                                 
+t= 17.38  PASS  T4f 导入结束后占位行消失                                 
+t= 17.38  PASS  IMP0 取到 app.js 源码（后面三条靠它）                      33927
+t= 17.38  PASS  IMP1 ★★ app.js 的**代码**里不再有「!p.changed 就整包 return」那个早退 
+t= 17.38  PASS  IMP2 ★★ 轻的东西（导入进度 / 每行进度）在 changed 判断**之外**，每轮都灌 
+t= 17.38  PASS  IMP3 ★ 重活（整表重渲染）仍然只在 changed 时才做（别把性能搞坏）       
+t= 17.38  PASS  IMP3b ★ 点导入会**当场**画占位（不等轮询）—— 源码里紧跟着 renderList() 33463 字符
+t= 17.38  PASS  IMP4a 前置：先清干净（列表里没有占位行）                        0
+t= 17.38  PASS  IMP4 ★★ changed=false 的轮询照样把「导入中」画出来（旧代码这里恒为 0） 1
+t= 17.38  PASS  IMP5 ★ 而且画的是**轮询带回来的**那份数据（不是本地的残留）            复制中 轮询带回来的.mp4（1/2）50%
+t= 17.38  PASS  T3a ★★ 中间浮层已经删掉了（DOM 里不存在 #camOverlay）         false
+t= 17.38  PASS  T3b ★★ 「取消等待」按钮已经删掉（DOM 里不存在 #camCancel）       false
+t= 17.38  PASS  T3b2 ★ 附属控件默认隐藏（只剩 ffmpeg 直录 / 秒数，调起失败才出现）     {"busy":false,"fallbackShown":false,"cancelExists":false,"fallbackVisible":false,"secsVisible":false,"overlayExists":false,"nameQueue":[],"naming":false}
+t= 17.38  PASS  T3c ★★ 点摄像头 -> 立刻发出 open_camera_app（没有中间层挡着）   poll,poll,poll,poll
+t= 17.38  PASS  T3d ★ 摄像头按钮上不再有「未接入」角标                         null
+t= 17.38  PASS  T3e ★ 调起失败要弹提示说清原因（不静默）                        打不开系统相机：假链路（VKB_FAKE=1）不调起系统相机
+t= 17.38  PASS  T3f ★ 失败后状态行也写明（底部那条，不只有 toast）                调不起系统相机：假链路（VKB_FAKE=1）不调起系统相机 —— 可点「ffmpeg 直录」（会独占麦克风）
+t= 17.38  PASS  T3g ★ 降级入口只在调起失败后才露出来                          {"busy":false,"fallbackShown":true,"cancelExists":false,"fallbackVisible":true,"secsVisible":true,"overlayExists":false,"nameQueue":[],"naming":false}
+t= 17.38  PASS  T3h 降级录制秒数可调（不是写死）                             10
+t= 17.38  PASS  T3i ★★ 监视在跑时界面上不出现任何常驻状态（状态行一字未动）              调不起系统相机：假链路（VKB_FAKE=1）不调起系统相机 —— 可点「ffmpeg 直录」（会独占麦克风）
+t= 17.38  PASS  T3j ★ 监视目录只进状态行的 tooltip（看得见才怪，但排查时能查）         监视目录：
+D:\asus\Pictures\Camera Roll
+t= 17.38  PASS  T3k 监视结束后界面同样干净（没有留下任何痕迹）                      调不起系统相机：假链路（VKB_FAKE=1）不调起系统相机 —— 可点「ffmpeg 直录」（会独占麦克风）
+t= 17.38  PASS  T3l ★ 录完导入后弹出命名框                               true
+t= 17.38  PASS  T3m 命名后框关闭、条目改名被调用                             对话框还开着
+t= 17.38  PASS  T3n 调起失败后降级按钮可见                                
+t= 17.38  PASS  T5a ★ 点降级按钮先弹二次确认（不是直接就跑）                      true
+t= 17.38  PASS  T5b ★ 文案明确说了会独占麦克风                             ffmpeg 会**独占麦克风**，这段时间里你的语音工具（比如语音悬浮球、讯飞听见）可能录不到声音。
+
+要录 10 秒，录制期间也没有画面可看。确定继续吗？
+t= 17.38  PASS  T5c ★ 文案提醒了会影响的正是语音工具                          ffmpeg 会**独占麦克风**，这段时间里你的语音工具（比如语音悬浮球、讯飞听见）可能录不到声音。
+
+要录 10 秒，录制期间也没有画面可看。确定继续吗？
+t= 17.38  PASS  T5d ★ 确认按钮写「继续录制」而不是默认的「删除」                    继续录制
+t= 17.38  PASS  T5e ★★ 点取消 -> 完全没有调用 dshow（桥调用记录里没有它）          open_camera_app,poll,poll,poll,poll,poll,poll,poll,poll,rename_item,poll,poll,poll,poll,poll,poll,poll,poll
+t= 17.38  PASS  T5f 取消后确认框关闭                                   
+t= 17.38  PASS  T5g 取消后状态行说明没有占用麦克风                            已取消（没有占用麦克风）
+t= 17.38  合计 145 通过 / 0 失败 / 共 145

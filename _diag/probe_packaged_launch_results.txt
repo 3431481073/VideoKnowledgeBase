@@ -1,0 +1,102 @@
+t=   0.00  exe = D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\VideoKnowledgeBase.exe
+t=   0.00  PASS  P0a exe 存在                                             D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\VideoKnowledgeBase.exe
+t=   1.00  PASS  P0b 事件钩子装上了（回调实例已存住）                                   568069157
+t=   1.00  
+t=   1.00  ========== P1 阳性对照（必须抓到黑框）==========
+t=  16.47    阳性对照期共 21 条事件，其中控制台类 3 条：
+t=  16.47            pid=3576    cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  16.47            pid=3576    cls=SystemUserAdapterWindowClass       title=
+t=  16.47            pid=3576    cls=IME                                title=Default IME
+t=  16.47            pid=3576    cls=Windows.UI.Core.CoreWindow         title=DesktopWindowXamlSource
+t=  16.47            pid=3576    cls=XCPTimerClass                      title=XCP
+t=  16.47            pid=3576    cls=XAMLMessageWindowClass             title=
+t=  16.47      ★黑框 pid=3576    cls=Windows Terminal c337fbb7c4150ce2  title=Windows Terminal
+t=  16.47      ★黑框 pid=3576    cls=CASCADIA_HOSTING_WINDOW_CLASS      title=Windows Terminal
+t=  16.47            pid=3576    cls=DRAG_BAR_WINDOW_CLASS              title=
+t=  16.47            pid=3576    cls=Windows.UI.Composition.DesktopWindowContentBridge title=DesktopWindowXamlSource
+t=  16.47            pid=3576    cls=Windows.UI.Input.InputSite.WindowClass title=
+t=  16.47            pid=3576    cls=CicMarshalWndClass                 title=CicMarshalWnd
+t=  16.47            pid=3576    cls=MSCTFIME UI                        title=MSCTFIME UI
+t=  16.47            pid=13576   cls=OleMainThreadWndClass              title=OLEChannelWnd
+t=  16.47      ★黑框 pid=34104   cls=PseudoConsoleWindow                title=
+t=  16.47            pid=3576    cls=OleDdeWndClass                     title=DDE Server Window
+t=  16.47            pid=13576   cls=MSTaskListWClass                   title=运行中的应用程序
+t=  16.47            pid=13576   cls=MSTaskListWClass                   title=运行中的应用程序
+t=  16.47            pid=13576   cls=OleMainThreadWndClass              title=OLEChannelWnd
+t=  16.47            pid=40396   cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  16.47            pid=13576   cls=OleMainThreadWndClass              title=OLEChannelWnd
+t=  16.47  PASS  P1a ★ 阳性对照：探针抓得到黑框                                     抓到 3 个：['CASCADIA_HOSTING_WINDOW_CLASS', 'PseudoConsoleWindow', 'Windows Terminal c337fbb7c4150ce2']
+t=  16.47  
+t=  16.47  ========== 起打包版 ==========
+t=  16.52    已起 exe，PID=40560
+t=  17.27    ★ 启动耗时 0.75s（从拉起进程到主窗口出现）cls=WindowsForms10.Window.8.app.0.aec740_r21_ad1 title=视频知识库 · 工作台
+t=  17.27  PASS  P2a ★ exe 起来了（有主窗口事件）                                  视频知识库 · 工作台
+t=  17.27  PASS  P2b ★ 启动到主窗口 < 20s                                     0.75s
+t=  19.27    主窗口 hwnd=4000902 cls=WindowsForms10.Window.8.app.0.aec740_r21_ad1 title=视频知识库 · 工作台 iconic=0 visible=1
+t=  19.27  PASS  P3a ★ 窗口不是最小化状态                                        IsIconic=0
+t=  19.27  PASS  P3b ★ 窗口可见                                             IsWindowVisible=1
+t=  19.27  
+t=  19.27    _internal\webui\media 存在=True junction=True
+t=  19.27    联接指向 = \\?\D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\data\media
+t=  19.27    期望指向 = D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\data\media
+t=  19.27  PASS  P4a ★ _internal\webui\media 是联接                        D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\_internal\webui\media
+t=  19.27  PASS  P4b ★ 联接指向 dist 下的 data\media                          \\?\D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\data\media
+t=  19.27  
+t=  19.27  ========== P1 启动期黑框 ==========
+t=  19.28    启动全程钩子记到 38 条事件：
+t=  19.28            pid=40560   top=True  cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  19.28            pid=40560   top=True  cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  19.28            pid=40560   top=True  cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  19.28            pid=40560   top=True  cls=WindowsForms10.Window.8.app.0.aec740_r21_ad1 title=
+t=  19.28            pid=40560   top=True  cls=IME                                title=Default IME
+t=  19.28            pid=40560   top=True  cls=.NET-BroadcastEventWindow.4.0.0.0.aec740.0 title=.NET-BroadcastEventWindow.4.0.0.0.aec740.0
+t=  19.28            pid=40560   top=True  cls=WindowsForms10.Window.8.app.0.aec740_r21_ad1 title=视频知识库 · 工作台
+t=  19.28            pid=40560   top=True  cls=CicMarshalWndClass                 title=CicMarshalWnd
+t=  19.28            pid=40560   top=True  cls=MSCTFIME UI                        title=MSCTFIME UI
+t=  19.28            pid=40560   top=True  cls=IME                                title=Default IME
+t=  19.28            pid=40560   top=True  cls=GDI+ Hook Window Class             title=GDI+ Window (VideoKnowledgeBase.exe)
+t=  19.28            pid=40560   top=True  cls=Chrome_MessageWindow               title=
+t=  19.28            pid=40560   top=False cls=WindowsForms10.Window.8.app.0.aec740_r21_ad1 title=
+t=  19.28            pid=40560   top=False cls=Chrome_WidgetWin_0                 title=
+t=  19.28            pid=40560   top=True  cls=WindowsForms10.Window.0.app.0.aec740_r21_ad1 title=TimerNativeWindow
+t=  19.28            pid=13576   top=False cls=MSTaskListWClass                   title=运行中的应用程序
+t=  19.28            pid=13576   top=False cls=MSTaskListWClass                   title=运行中的应用程序
+t=  19.28            pid=25708   top=True  cls=IME                                title=Default IME
+t=  19.28            pid=26308   top=True  cls=Chrome_MessageWindow               title=
+t=  19.28            pid=25708   top=True  cls=crashpad_SessionEndWatcher         title=
+t=  19.28            pid=26308   top=True  cls=Chrome_MessageWindow               title=D:\MyProject\VideoKnowledgeBase\build\dist_onedir\VideoKnowledgeBase\data\webview\EBWebView
+t=  19.28            pid=26308   top=True  cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  19.28            pid=26308   top=True  cls=IME                                title=Default IME
+t=  19.28            pid=26308   top=True  cls=Base_PowerMessageWindow            title=
+t=  19.28            pid=26308   top=True  cls=Chrome_WidgetWin_0                 title=
+t=  19.28            pid=26308   top=True  cls=CicMarshalWndClass                 title=CicMarshalWnd
+t=  19.28            pid=26308   top=True  cls=Chrome_MessageWindow               title=
+t=  19.28            pid=39296   top=True  cls=OleMainThreadWndClass              title=OleMainThreadWndName
+t=  19.28            pid=26308   top=True  cls=Chrome_WidgetWin_1                 title=
+t=  19.28            pid=26308   top=False cls=Chrome_RenderWidgetHostHWND        title=Chrome Legacy Window
+t=  19.28            pid=26308   top=False cls=Chrome_RenderWidgetHostHWND        title=Chrome Legacy Window
+t=  19.28            pid=39296   top=True  cls=OleMainThreadWndClass              title=OLEChannelWnd
+t=  19.28            pid=26308   top=True  cls=MSCTFIME UI                        title=MSCTFIME UI
+t=  19.28            pid=26308   top=False cls=Chrome_WidgetWin_1                 title=无标题
+t=  19.28            pid=30268   top=True  cls=Chrome_MessageWindow               title=
+t=  19.28            pid=30268   top=True  cls=IME                                title=Default IME
+t=  19.28            pid=30268   top=True  cls=Chrome_WidgetWin_0                 title=
+t=  19.28            pid=30268   top=False cls=Intermediate D3D Window            title=
+t=  19.28  PASS  P1b 钩子在启动期是活的（记到了它自己的窗口）                               本进程窗口事件 15 条
+t=  19.28  PASS  P1c ★★ 启动期 0 黑框                                        抓到 0 个：[]
+t=  19.28  
+t=  19.28  ========== P5 单实例闸 ==========
+t=  19.48    第一次启动后的进程 = [40560]
+t=  25.78    再点一次后的进程 = [40560]
+t=  25.78    第二个进程退出码 = 0（None=还活着）
+t=  25.78  PASS  P5a ★ 连点两次仍然只有一个应用进程                                   1 个：[40560]
+t=  25.78  PASS  P5b ★ 第二个进程自己退了（闸拦住并让位）                                exit=0
+t=  25.78  
+t=  25.81    dist\data 共 449 个文件，其中 media 47 个
+t=  25.81  PASS  P6a ★ 用户库在（workspace.json + 真实媒体文件都看得见）                media=47 个
+t=  25.81  
+t=  25.81    关闭自己起的 PID 40560
+t=  28.31    收尾后残留 = []
+t=  28.81  
+t=  28.81  ---- 结果 ----
+t=  28.81  合计 14 通过 / 0 失败 / 共 14

@@ -1,0 +1,44 @@
+t=   1.84  界面就绪
+t=   1.89  跑之前 media 文件数=15，workspace 条目数=12
+t=   2.81  摄像头状态 = {"active": true, "stage": "waiting", "found": [], "photos": 0, "elapsed": 0, "note": "相机应用当前没在运行，仍在等待…（按红色圆点开始录制；不想录了可以点「取消等待」）", "error": null, "dirs": ["C:\\Users\\asus\\Pictures\\Camera Roll", "C:\\Users\\asus\\Pictures", "D:\\asus\\Pictures", "D:\\asus\\Pictures\\Camera Roll", "C:\\Users\\asus\\Videos\\Captures"], "elapsedSinceNew": 0, "result": null, "mode": {"state": "unknown", "note": "未知"}
+t=   2.81  PASS  A1 ★ 点「打开摄像头」-> 提示浮层打开                         
+t=   2.81  PASS  A2 ★ 系统相机应用被调起（监视已开始）                          相机应用当前没在运行，仍在等待…（按红色圆点开始录制；不想录了可以点「取消等待」）
+t=   2.81  监视中的候选目录：
+t=   2.81      C:\Users\asus\Pictures\Camera Roll
+t=   2.81      C:\Users\asus\Pictures
+t=   2.81      D:\asus\Pictures
+t=   2.81      D:\asus\Pictures\Camera Roll
+t=   2.81      C:\Users\asus\Videos\Captures
+t=   2.81  PASS  A3 候选目录非空                                      5
+t=   2.84  PASS  A4 ★ WindowsCamera.exe 真的在跑                    [34088]
+t=   2.84  
+t=   2.84  ==============================================================
+t=   2.84    请在系统相机应用窗口里：
+t=   2.84      1) 点底部那个**红色圆点**开始录制（不是白色快门）
+t=   2.84      2) 录 5 秒左右，再点一次同一个圆点停止
+t=   2.84      3) 关掉相机应用窗口
+t=   2.84    脚本最多等你 600 秒
+t=   2.84  ==============================================================
+t=   2.84  
+t=   2.84    状态：相机应用当前没在运行，仍在等待…（按红色圆点开始录制；不想录了可以点「取消等待」）
+t=   3.45    状态：等待录制…（相机应用运行中）
+t=  28.83    状态：已检测到 1 段录制
+t=  35.48    状态：已导入 1 段录制
+t=  35.48  PASS  A5 ★ 监视跑到了结论（不是一直挂着）                           done
+t=  35.48  最终状态 = {"active": false, "stage": "done", "found": [{"dir": "D:\\asus\\Pictures\\Camera Roll", "name": "WIN_20260927_23_26_32_Pro.mp4", "size": 3797626}], "photos": 0, "elapsed": 31, "note": "已导入 1 段录制", "error": null, "dirs": ["C:\\Users\\asus\\Pictures\\Camera Roll", "C:\\Users\\asus\\Pictures", "D:\\asus\\Pictures", "D:\\asus\\Pictures\\Camera Roll", "C:\\Users\\asus\\Videos\\Captures"], "elapsedSinceNew": 7.25, "result": null, "mode": {"state": "video", "note": "已是视频模式（相机记住了上次的选择）", "raw": "already
+t=  35.48  导入的产物 = ['WIN_20260927_23_26_32_Pro.mp4']
+t=  35.48  
+t=  35.48  【谜底】新文件出现在哪个候选目录：D:\asus\Pictures\Camera Roll
+t=  35.48  PASS  A6 ★ 检测到录制并自动导入                                已导入 1 段录制
+t=  35.81      WIN_20260927_23_26_32_Pro.mp4 存在=True 6.9s 视频流=True
+t=  35.81  PASS  A7 ★ 录制的文件真的进了 data/media/ 且能播（有时长+视频流）        ['WIN_20260927_23_26_32_Pro.mp4 存在=True 6.9s 视频流=True']
+t=  35.81  PASS  A8 ★ 是复制进来的（相机胶卷里的原文件一个都没少）                    ['D:\\asus\\Pictures\\Camera Roll\\WIN_20260927_23_26_32_Pro.mp4']
+t=  36.22  PASS  A9 ★ 导入后弹出命名框                                  True
+t=  37.73  PASS  A10 ★ 命名生效（列表里出现了这个名字）                         ['e2e摄像头录制']
+t=  37.73  PASS  A11 除录制产物外没多出别的文件                              []
+t=  37.78  清理：文件残留=[] 条目残留=[]
+t=  37.78  PASS  A12 ★ 测试产物已清理（用户数据恢复原状）                        
+t=  37.78  PASS  A13 跑完后 media 文件数与跑之前一致                        []
+t=  37.80  注意：你在相机胶卷里录的那份**原文件没有动**
+t=  37.80  ---- 结果 ----
+t=  37.80  合计 13 通过 / 0 失败 / 共 13

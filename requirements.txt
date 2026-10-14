@@ -17,6 +17,12 @@ huggingface_hub==1.27.0
 idna==3.18
 imageio-ffmpeg==0.6.0
 numpy==2.5.2
+# CUDA 运行时：ctranslate2 用普通 LoadLibrary 加载 cublas，只认 PATH，
+# 所以 transcriber.py 会在 import faster_whisper 前把这些包的 bin 目录注入 PATH。
+# 不需要 nvidia-cudnn-cu12 —— ctranslate2 4.8.1 自带 cudnn64_9.dll。
+nvidia-cublas-cu12==12.9.2.10
+nvidia-cuda-nvrtc-cu12==12.9.86
+nvidia-cuda-runtime-cu12==12.9.79
 onnxruntime==1.28.0
 opencc-python-reimplemented==0.1.7
 packaging==26.3
@@ -32,3 +38,13 @@ tokenizers==0.23.1
 tqdm==4.70.0
 typing_extensions==4.16.0
 urllib3==2.7.0
+
+# Web 界面（pywebview + 它在本机 Windows 上用的 WebView2/.NET 后端依赖）
+# 不含 PyInstaller —— 那是构建期依赖，放在 requirements-build.txt
+bottle==0.13.4
+cffi==2.1.1
+clr-loader==0.3.1
+proxy-tools==0.1.0
+pycparser==3.0
+pythonnet==3.1.0
+pywebview==6.2.1

@@ -1,0 +1,52 @@
+t=   3.28  界面就绪
+t=   4.30  PASS  R0a ★ 界面上没有中间浮层（DOM 里不存在 #camOverlay）              
+t=   4.30  PASS  R0b ★ 「取消等待」按钮已经删掉（DOM 里不存在）                       
+t=   5.81  
+t=   5.81  ========== 第 1 轮：点「打开摄像头」==========
+t=   6.41    新增桥调用 = ['open_camera_app', 'poll', 'poll', 'poll', 'poll', 'poll']
+t=   6.41    相机起来耗时 = 0.58s
+t=   6.41  PASS  R1a ★ 第 1 次点击发出了 open_camera_app                   ['open_camera_app', 'poll', 'poll', 'poll', 'poll']
+t=   6.41  PASS  R1b ★★ 第 1 次相机真的起来了                                0.58s
+t=   6.41  PASS  R1c 相机起来够快（< 8 秒）                                  0.58s
+t=   6.41  PASS  R1d ★ 相机窗口出现了（不只是进程）                               6555920
+t=   6.41    ---- 关掉相机，紧接着准备下一轮 ----
+t=   7.19     已关相机 PID 2200
+t=   8.73    关闭后相机进程 = []（应当为空）
+t=   8.77  PASS  R1e 关闭后相机进程确实没了                                    
+t=   8.77  
+t=   8.77  ========== 第 2 轮：点「打开摄像头」==========
+t=   9.11    新增桥调用 = ['open_camera_app', 'poll', 'poll', 'poll']
+t=   9.11    相机起来耗时 = 0.33s
+t=   9.11  PASS  R2a ★ 第 2 次点击发出了 open_camera_app                   ['open_camera_app', 'poll', 'poll', 'poll']
+t=   9.11  PASS  R2b ★★ 第 2 次相机真的起来了                                0.33s
+t=   9.11  PASS  R2c 相机起来够快（< 8 秒）                                  0.33s
+t=   9.11  PASS  R2d ★ 相机窗口出现了（不只是进程）                               31590768
+t=   9.11    ---- 关掉相机，紧接着准备下一轮 ----
+t=   9.92     已关相机 PID 80724
+t=  11.45    关闭后相机进程 = []（应当为空）
+t=  11.47  PASS  R2e 关闭后相机进程确实没了                                    
+t=  11.48  
+t=  11.48  ========== 第 3 轮：点「打开摄像头」==========
+t=  11.80    新增桥调用 = ['open_camera_app', 'poll', 'poll']
+t=  11.80    相机起来耗时 = 0.31s
+t=  11.80  PASS  R3a ★ 第 3 次点击发出了 open_camera_app                   ['open_camera_app', 'poll', 'poll']
+t=  11.80  PASS  R3b ★★ 第 3 次相机真的起来了                                0.31s
+t=  11.80  PASS  R3c 相机起来够快（< 8 秒）                                  0.31s
+t=  11.81  PASS  R3d ★ 相机窗口出现了（不只是进程）                               6686992
+t=  11.81  
+t=  11.81  camera_app 时间线：
+t=  11.81    +  5.781s  launch() 开始；当前 app_running=False
+t=  11.81    +  5.812s  第 1 级：os.startfile(microsoft.windows.camera:)
+t=  11.81    +  6.359s  第 1 级成功，进程出现，耗时 0.55s
+t=  11.81    +  6.375s  open_camera_watch：快照了 5 个候选目录，开始监视
+t=  11.81    +  8.734s  launch() 开始；当前 app_running=False
+t=  11.81    +  8.765s  第 1 级：os.startfile(microsoft.windows.camera:)
+t=  11.81    +  9.172s  第 1 级成功，进程出现，耗时 0.41s
+t=  11.81    +  9.187s  已有监视在跑 -> 不新建监视，只拉起相机（ok=True）
+t=  11.81    + 11.437s  launch() 开始；当前 app_running=False
+t=  11.81    + 11.453s  第 1 级：os.startfile(microsoft.windows.camera:)
+t=  11.81  PASS  R9b ★ 时间线里记录到 3 次 launch（每次都真调了）                   3
+t=  12.56     已关相机 PID 85072
+t=  14.06  
+t=  14.06  ---- 结果 ----
+t=  14.06  合计 17 通过 / 0 失败 / 共 17

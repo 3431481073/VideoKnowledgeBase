@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>rec probe</title></head>
+<body style="font:13px sans-serif">
+<video id="p" autoplay playsinline muted style="width:240px;background:#000"></video>
+<video id="ck" controls style="width:240px;background:#111"></video>
+<script>
+window.__REC = {stage: 'boot'};
+function set(o) { var s = window.__REC; for (var k in o) s[k] = o[k]; }
+
+set({stage: 'ready', origin: location.origin, secure: window.isSecureContext});
+
+window.__startRec = function (mime, seconds) {
+  set({stage: 'gum', mime: mime});
+  var t0 = Date.now();
+  navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function (s) {
+    set({stage: 'record', gumMs: Date.now() - t0});
+    document.getElementById('p').srcObject = s;
+    var mr;
+    try {
+      mr = mime ? new MediaRecorder(s, {mimeType: mime}) : new MediaRecorder(s);
+    } catch (e) {
+      set({stage: 'error', where: 'ctor', name: e.name, msg: e.message});
+      return;
+    }
+    set({realMime: mr.mimeType});
+    var chunks = [];
+    var sent = 0;
+    var produced = 0;      // dataavailable 产生过几片
+    var inflight = 0;      // FileReader/上传还在途的片数
+    mr.ondataavailable = function (ev) {
+      if (!ev.data || !ev.data.size) return;
+      chunks.push(ev.data);
+      produced++;
+      inflight++;
+      var idx = sent++;
+      var fr = new FileReader();
+      fr.onload = function () {
+        // 【坑】不能用 split(',')[1]：MediaRecorder 的 blob 类型带编解码串
+        // （video/mp4;codecs=avc1.42E01E,opus），data URL 里因此有**两个**逗号，
+        // split 会取到 "opus;base64"。实测就是这么栽的。
+        var s = fr.result;
+        var b64 = s.substring(s.indexOf('base64,') + 7);
+        window.pywebview.api.rec_chunk('p1', idx, b64).then(function (r) {
+          set({sent: idx + 1, lastChunkBytes: ev.data.size, apiOk: r});
+        }).catch(function (e) {
+          set({stage: 'error', where: 'api', name: e.name, msg: String(e)});
+        }).then(function () { inflight--; });
+      };
+      fr.readAsDataURL(ev.data);
+    };
+    mr.onerror = function (e) { set({stage: 'error', where: 'rec', msg: String(e.error || e)}); };
+    mr.onstop = function () {
+      s.getTracks().forEach(function (t) { t.stop(); });
+      var blob = new Blob(chunks, {type: mr.mimeType});
+      set({stage: 'stopped', totalBytes: blob.size, chunkCount: chunks.length});
+      // 【坑】onstop 时 pending 是空的 —— 实测 dataavailable 连同它的
+      // FileReader 链全都在 stop() 之后才成批落地，Promise.all([]) 会立刻
+      // 通过，收尾抢在分片落盘之前。所以改成**静默期等待**。
+      var settle = function () {
+        if (inflight > 0 || sent < produced) { setTimeout(settle, 100); return; }
+        set({settled: true, produced: produced, sentCount: sent});
+      window.pywebview.api.rec_done('p1', blob.size, mr.mimeType).then(function (r) {
+        set({stage: 'saved', saved: r});
+        // 回读验证：把内存里的 blob 再解码一次，能出画面才算容器合法
+        var url = URL.createObjectURL(blob);
+        var v = document.getElementById('ck');
+        v.addEventListener('loadedmetadata', function () {
+          set({stage: 'verified', playW: v.videoWidth, playH: v.videoHeight,
+               playDur: v.duration});
+        });
+        v.addEventListener('error', function () {
+          set({stage: 'playfail', playErr: v.error && v.error.code});
+        });
+        v.src = url;
+      }).catch(function (e) { set({stage: 'error', where: 'done', msg: String(e)}); });
+      };
+      settle();
+    };
+    mr.start(1000);                       // 每秒一个 chunk
+    setTimeout(function () { mr.stop(); }, seconds * 1000);
+  }).catch(function (e) {
+    set({stage: 'error', where: 'gum', name: e.name, msg: e.message});
+  });
+};
+</script>
+</body></html>

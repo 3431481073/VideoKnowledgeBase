@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>bridge probe</title></head>
+<body style="font:13px sans-serif">
+<div id="log">bridge probe</div>
+<script>
+window.__BR = {stage: 'ready'};
+
+function b64Of(n) {
+  var u = new Uint8Array(n);
+  for (var i = 0; i < n; i++) { u[i] = (i * 37 + 11) & 0xff; }
+  var s = '';
+  for (var j = 0; j < u.length; j++) { s += String.fromCharCode(u[j]); }
+  return btoa(s);
+}
+
+window.__runBridge = function (sizes) {
+  var out = [];
+  var i = 0;
+  function next() {
+    if (i >= sizes.length) { window.__BR = {stage: 'done', results: out}; return; }
+    var n = sizes[i++];
+    var b64 = b64Of(n);
+    var t0 = Date.now();
+    window.pywebview.api.echo_bridge(n, b64).then(function (r) {
+      out.push({in: n, outLen: b64.length, r: r, ms: Date.now() - t0});
+      next();
+    }).catch(function (e) {
+      out.push({in: n, outLen: b64.length, err: String(e), ms: Date.now() - t0});
+      next();
+    });
+  }
+  next();
+};
+</script>
+</body></html>

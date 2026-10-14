@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>cam probe</title></head>
+<body style="font:14px sans-serif">
+<video id="v" autoplay playsinline muted style="width:320px;background:#000"></video>
+<script>
+window.__CAM = {stage: 'boot'};
+function set(o) { window.__CAM = o; }
+
+set({
+  stage: 'ready',
+  origin: location.origin,
+  secure: window.isSecureContext,
+  hasMd: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+  hasRec: typeof MediaRecorder !== 'undefined',
+  hasED: !!(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
+});
+
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  var t0 = Date.now();
+  navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function (s) {
+    var v = document.getElementById('v');
+    v.srcObject = s;
+    v.onloadedmetadata = function () {
+      var tr = s.getVideoTracks()[0];
+      var st = tr ? tr.getSettings() : {};
+      set({
+        stage: 'ok', ms: Date.now() - t0,
+        w: st.width, h: st.height,
+        label: (tr && tr.label) || '',
+        videoTracks: s.getVideoTracks().length,
+        audioTracks: s.getAudioTracks().length,
+        vp8: (typeof MediaRecorder !== 'undefined')
+             ? MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus') : null,
+        h264: (typeof MediaRecorder !== 'undefined')
+             ? MediaRecorder.isTypeSupported('video/webm;codecs=h264') : null,
+        mp4: (typeof MediaRecorder !== 'undefined')
+             ? MediaRecorder.isTypeSupported('video/mp4') : null
+      });
+    };
+  }).catch(function (e) {
+    set({stage: 'error', ms: Date.now() - t0, name: e.name, msg: e.message});
+  });
+}
+</script>
+</body></html>

@@ -1,0 +1,567 @@
+/* 视频知识库 · 工作台
+   配色集中在这一个 :root 块里，要换深色只改这几行。 */
+
+:root {
+  --bg:        #eef0f3;
+  --panel:     #ffffff;
+  --line:      #e4e7ec;
+  --line-soft: #f0f2f5;
+  --text:      #1f2933;
+  --text-2:    #52606d;
+  --muted:     #98a2b3;
+  --accent:    #2f855a;
+  --accent-bg: #e9f4ee;
+  --blue:      #2b6cb0;
+  --blue-bg:   #e8f0fa;
+  --danger:    #d64545;
+  --danger-bg: #fdecec;
+  --divider:   #dfe3e8;
+  --divider-hi:#2f855a;
+  --node-line: #c7d0da;
+  --edge:      #c2ccd8;
+  --radius:    8px;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, .05);
+  --shadow-md: 0 6px 20px rgba(16, 24, 40, .10);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.65 "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;                 /* 拖动节点时不要选中文字 */
+}
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+input, textarea { user-select: text; }
+
+/* ================= 十字网格 ================= */
+.grid {
+  display: grid;
+  height: 100vh;
+  --colL: 2fr; --colR: 1fr;
+  --rowT: 3fr; --rowB: 2fr;      /* 规格：上方 3/5，下方 2/5 */
+  grid-template-columns: var(--colL) 6px var(--colR);
+  grid-template-rows:    var(--rowT) 6px var(--rowB);
+  grid-template-areas:
+    "tree    vd  done"
+    "hdl     vd  hdr"
+    "content vd  pending";
+}
+.divider-v { grid-area: vd; }
+#divHL     { grid-area: hdl; }
+#divHR     { grid-area: hdr; }
+
+.divider { background: var(--divider); position: relative; }
+.divider-v { cursor: col-resize; }
+.divider-h { cursor: row-resize; }
+.divider::after {
+  content: ""; position: absolute; inset: -3px;
+}
+.divider:hover, .divider.active { background: var(--divider-hi); }
+
+/* ================= 窗格 ================= */
+.pane {
+  background: var(--panel);
+  display: flex; flex-direction: column;
+  min-width: 0; min-height: 0;      /* 关键：让内部滚动而不是撑破格子 */
+  overflow: hidden;
+}
+.pane-head, .toolbar {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  background: #fcfdfe;
+}
+.toolbar { gap: 8px; }
+.pane-title { font-weight: 600; font-size: 13px; }
+.pane-hint  { color: var(--muted); font-size: 11px; }
+.spacer { flex: 1 1 auto; }
+
+.pane-body { flex: 1 1 auto; min-height: 0; }
+.scroll { overflow: auto; padding: 12px 14px; }
+.scroll::-webkit-scrollbar { width: 9px; height: 9px; }
+.scroll::-webkit-scrollbar-thumb { background: #d3d9e0; border-radius: 5px; }
+.scroll::-webkit-scrollbar-thumb:hover { background: #bcc4ce; }
+.scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ================= 导图 ================= */
+.graph-viewport {
+  position: relative; overflow: hidden;
+  background: #fbfcfd;
+  cursor: default;
+}
+.graph-viewport.panning { cursor: grabbing; }
+.graph-canvas { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+#edges { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+#edges path { fill: none; stroke: var(--edge); stroke-width: 1.6; }
+
+.node {
+  position: absolute; left: 0; top: 0;
+  transform: translate(var(--x, 0px), var(--y, 0px)) translate(-50%, -50%);
+  padding: 7px 14px;
+  white-space: nowrap;
+  border: 1px solid var(--node-line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+  transition: box-shadow .12s, border-color .12s;
+}
+.node.topic { background: var(--accent-bg); border-color: #9ac7ae; font-weight: 600; }
+.node.collapsed { border-style: dashed; }
+.node.selected { box-shadow: 0 0 0 2px rgba(47, 133, 90, .35); }
+.node.drop-target { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(214, 69, 69, .28); }
+/* pointer-events:none 是必须的：拖动时节点被移到光标下方，
+   若仍参与命中测试，elementFromPoint 永远先返回它自己，
+   就找不到真正的落点目标了。 */
+.node.dragging {
+  cursor: grabbing; opacity: .92; box-shadow: var(--shadow-md);
+  z-index: 5; pointer-events: none;
+}
+
+/* ================= 右下：三 tab =================
+   标题去掉后 tab 靠左；按钮整体压扁，把高度让给下面的列表。 */
+#pageDone .pane-head { padding: 4px 12px; gap: 8px; }
+.tabs { display: flex; gap: 2px; }
+.tabs button {
+  border: 0; background: transparent; color: var(--text-2);
+  padding: 2px 8px; border-radius: 5px; font-size: 11px; line-height: 18px;
+}
+.tabs button:hover { background: var(--line-soft); }
+.tabs button.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+/* 头栏里的按钮也要压：行高写死 18px，否则 font-size 乘继承的 1.65
+   会撑到 27px，头栏就压不下去（实测 37px）。 */
+#pageDone .btn { padding: 2px 9px; font-size: 11.5px; line-height: 18px; }
+#pageDone .btn.icon { padding: 2px 7px; }
+
+/* 规格 12：每条加框，要分得清 */
+.row-item {
+  padding: 9px 11px; border-radius: var(--radius);
+  border: 1px solid var(--line); background: #fff;
+  cursor: pointer; transition: border-color .12s, box-shadow .12s;
+}
+.row-item + .row-item { margin-top: 6px; }
+.row-item:hover { background: #f8fafc; border-color: #c4ccd6; }
+.row-item.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+.row-item .t { font-weight: 600; font-size: 12.5px; word-break: break-all; }
+.row-item .m { color: var(--muted); font-size: 11px; margin-top: 1px; }
+.row-item .s { color: var(--text-2); font-size: 12px; margin-top: 3px; }
+.empty { color: var(--muted); font-size: 12px; padding: 18px 4px; text-align: center; }
+
+/* ================= 左下：文章 =================
+   层级靠三样东西表达：字号、字重、左缩进。
+   标题与正文都是自动撑高的 textarea，无边框 —— 平时读起来就是一篇
+   有层级的文章，点进去才能看出是可编辑的。 */
+.article { padding: 22px 30px 48px; user-select: text; }
+
+.article .blk { position: relative; }
+
+.article .h,
+.article .body {
+  display: block; width: 100%;
+  margin: 0; padding: 0; border: 0; background: transparent;
+  resize: none; overflow: hidden;
+  font-family: inherit;
+  border-radius: 4px;
+}
+.article .h { color: var(--text); line-height: 1.45; }
+.article .body { font-size: 13.5px; line-height: 1.9; color: #3a4652; }
+
+/* 条目全文视图（点右下条目）：只读块，不是可编辑的 textarea */
+.article .h.ro { cursor: default; }
+.article .ro-meta {
+  font-size: 11px; color: var(--muted); margin: 4px 0 10px;
+  padding-bottom: 8px; border-bottom: 1px dashed var(--line);
+}
+.article .body.ro {
+  font-size: 13.5px; line-height: 1.9; color: #3a4652;
+  white-space: pre-wrap; word-break: break-word; user-select: text;
+}
+
+/* 只有聚焦时才给底色，不做 hover 底色 —— hover 底色会让整片看起来像表格 */
+.article .h:focus,
+.article .body:focus {
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 4px var(--accent-bg);
+  outline: none;
+}
+
+/* 层级：字号 + 字重 + 左缩进 */
+.blk.lv0 .h { font-size: 19px;   font-weight: 700; }
+.blk.lv1 .h { font-size: 16px;   font-weight: 600; }
+.blk.lv2 .h { font-size: 14px;   font-weight: 600; }
+.blk.lv3 .h { font-size: 13px;   font-weight: 600; color: #3a4652; }
+.blk.lv4 .h { font-size: 12.5px; font-weight: 600; color: #52606d; }
+
+.blk.lv0 { padding-left: 0;    margin-top: 22px; }
+.blk.lv1 { padding-left: 14px; margin-top: 16px; }
+.blk.lv2 { padding-left: 28px; margin-top: 12px; }
+.blk.lv3 { padding-left: 40px; margin-top: 10px; }
+.blk.lv4 { padding-left: 48px; margin-top: 9px; }
+.blk:first-child { margin-top: 0; }
+
+/* 正文紧跟在自己的标题后面 */
+.blk .body { margin-top: 4px; }
+
+/* ================= 右下：待处理 ================= */
+.stack { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
+.stack-page { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.stack-page.hidden { display: none; }
+
+.btn {
+  border: 1px solid var(--line); background: #fff;
+  padding: 5px 11px; border-radius: 6px; font-size: 12px;
+  transition: border-color .12s, background .12s;
+}
+.btn:hover { border-color: #b9c2cc; background: #fafbfc; }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: #276b49; }
+.btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn.danger:hover { background: #b93a3a; }
+.btn.icon { padding: 5px 9px; }
+
+.prow {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: var(--radius);
+}
+.prow + .prow { margin-top: 2px; }
+.prow:hover { background: #f8fafc; }
+.prow .info { flex: 1 1 auto; min-width: 0; }
+.prow .name { font-size: 12.5px; word-break: break-all; }
+.prow .tags { display: flex; gap: 6px; margin-top: 4px; }
+.pill {
+  font-size: 11px; padding: 1px 8px; border-radius: 10px;
+  background: var(--line-soft); color: var(--muted);
+}
+.pill.tx  { background: var(--blue-bg); color: var(--blue); }
+.pill.ok  { background: var(--accent-bg); color: var(--accent); }
+
+/* ================= 设置表单 ================= */
+.form { display: flex; flex-direction: column; gap: 12px; padding: 4px 2px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field > span { font-size: 11px; color: var(--text-2); }
+.field input, .field textarea {
+  border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 9px; background: #fff; width: 100%;
+  font-size: 12px; line-height: 1.7;
+}
+.field textarea { resize: vertical; font-family: inherit; }
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 133, 90, .12);
+}
+.form-foot { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+
+/* ================= 弹层 ================= */
+dialog {
+  border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px;
+  box-shadow: var(--shadow-md); min-width: 320px; background: #fff;
+}
+dialog::backdrop { background: rgba(15, 23, 32, .28); }
+dialog h3 { margin: 0 0 12px; font-size: 14px; }
+dialog p  { margin: 0 0 4px; font-size: 12.5px; color: var(--text-2); }
+/* 删除确认要**分条**说清"删什么、留什么"（视频文件保留是最要紧的那句），
+   所以这里保留换行。只作用于这一个元素，不动别的弹框。 */
+#dlgConfirmMsg { white-space: pre-line; }
+dialog input {
+  width: 100%; border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 9px; font-size: 13px;
+}
+dialog input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 133, 90, .12);
+}
+.dlg-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+.ctx {
+  position: fixed; z-index: 50; margin: 0; padding: 4px;
+  list-style: none; min-width: 132px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow-md);
+}
+.ctx li {
+  padding: 6px 11px; border-radius: 5px; font-size: 12.5px; cursor: pointer;
+}
+.ctx li:hover { background: var(--accent-bg); color: var(--accent); }
+.ctx li.disabled { color: var(--muted); pointer-events: none; }
+.ctx.hidden { display: none; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+  background: #24313d; color: #fff; padding: 9px 18px;
+  border-radius: 8px; font-size: 12.5px; box-shadow: var(--shadow-md);
+  z-index: 60; max-width: 70vw;
+}
+.toast.hidden { display: none; }
+/* 失败提示：换色 + 留给用户看清的时间（由 app.js 的 toast(msg, true) 触发）。
+   为什么必须和成功提示不一样：写盘失败/加节点失败这种事，"看起来像普通提示"
+   就等于没说 —— 实测踩过：用户以为加上了，其实没写上磁盘。 */
+.toast.err {
+  background: #8a2b2b; color: #fff;
+  box-shadow: 0 0 0 1px #d05252 inset, var(--shadow-md);
+}
+
+.boot {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--bg); color: var(--muted); font-size: 13px; z-index: 100;
+}
+.boot.hidden { display: none; }
+
+/* ================= 右上：播放器 ================= */
+.player-wrap { display: flex; flex-direction: column; padding: 10px 12px 12px; }
+/* 规格 8：整格不要黑底、不要写字。视频画面本身的黑色是视频内容，保留。 */
+.video-stage {
+  position: relative; flex: 1 1 auto; min-height: 0;
+  background: #f4f6f8; border: 1px solid var(--line-soft); border-radius: 8px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.video-stage.small { height: 168px; flex: 0 0 auto; }
+/* flex:0 0 auto 是必须的：旋转 90° 时元素被设成「舞台高 × 舞台宽」，
+   这个盒子比舞台高，若允许收缩就会被压扁，旋转后就铺不满。 */
+.video-stage video {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  flex: 0 0 auto; transform-origin: center center;
+}
+
+/* ================= 右上：播放器 =================
+   控制栏尺寸全部写死：播放键的文本在 ▶(1字符) 与 ❚❚(2字符) 之间切，
+   字符宽度不同会让按钮变宽、把整行顶得重排。所有非进度条元素都
+   flex: 0 0 固定值，进度条是**唯一**的弹性元素。 */
+.player-bar { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.player-bar .btn.icon {
+  flex: 0 0 auto; width: 34px; height: 26px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.range { -webkit-appearance: none; appearance: none; flex: 1 1 auto; min-width: 0;
+         height: 4px; background: var(--line); border-radius: 3px; outline: none; }
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--line);
+}
+.range:disabled { opacity: .45; }
+.time { font-size: 11.5px; color: var(--muted); flex: 0 0 96px; text-align: right;
+        font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---- 竖向音量：图标常驻，点它弹/收 34×112 的竖滑块 ---- */
+.vol-wrap { position: relative; flex: 0 0 auto; }
+.vol-pop {
+  position: absolute; bottom: calc(100% + 7px); left: 50%;
+  transform: translateX(-50%);
+  width: 34px; height: 112px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: var(--shadow-md); z-index: 6;
+}
+.vol-pop.hidden { display: none; }
+/* 横向滑块转 -90° 立起来：左端(min)转到下方，所以往上拖 = 调大。
+   容器 flex 居中，旋转后正好落在 34×112 的盒子里。 */
+.range.vrange {
+  flex: 0 0 auto; width: 92px; height: 4px;
+  transform: rotate(-90deg); transform-origin: center center;
+}
+
+/* ================= 处理小窗口（非模态浮层） ================= */
+/* pointer-events:none 是关键：浮层不拦截主界面的点击，
+   只有面板本体 pointer-events:auto —— 真正做到"非模态"。 */
+.overlay {
+  position: fixed; inset: 0; z-index: 40;
+  pointer-events: none;
+  display: flex; align-items: flex-end; justify-content: flex-end;
+  padding: 16px;
+}
+.overlay.hidden { display: none; }
+
+.proc-panel {
+  pointer-events: auto;
+  width: 820px; height: 520px; max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; box-shadow: 0 18px 48px rgba(16,24,40,.20);
+  overflow: hidden;
+}
+.proc-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-bottom: 1px solid var(--line);
+  background: #fcfdfe; cursor: move; user-select: none;
+}
+/* 三个页面共用一个容器，同一时刻只显示一个 */
+.proc-body { flex: 1 1 auto; min-height: 0; display: flex; }
+.proc-page { flex: 1 1 auto; min-height: 0; display: flex; }
+.proc-page.hidden { display: none; }
+/* 用 :not(.hidden) 而不是 id 直写 —— 否则 id 的特异性会压过
+   .proc-page.hidden，隐藏不掉。 */
+/* 常态页两行网格：第一行「列表 | 预览」，第二行动作栏横跨整行 */
+#pageProcList:not(.hidden) {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas: "list preview" "act act";
+}
+#pageProcList .proc-left { grid-area: list; }
+#pageProcList .proc-preview { grid-area: preview; flex: 1 1 auto; padding: 10px 12px 12px; }
+.proc-actions {
+  grid-area: act;
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 12px; border-top: 1px solid var(--line); background: #fcfdfe;
+}
+.proc-actions .btn { padding: 4px 14px; }
+.proc-bar-inline { flex: 0 0 110px; }
+
+.proc-left { border-right: 1px solid var(--line); display: flex;
+             flex-direction: column; min-height: 0; }
+.proc-tools { display: flex; gap: 6px; padding: 9px; border-bottom: 1px solid var(--line-soft); }
+.proc-tools .btn { flex: 1 1 0; font-size: 11.5px; padding: 5px 6px; }
+.proc-list { flex: 1 1 auto; overflow: auto; padding: 6px; }
+/* 整行可点 = 预览；勾选框和「转写」各自 stopPropagation，互不干扰。 */
+.proc-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px; border-radius: 7px; cursor: pointer;
+  font-size: 12px; word-break: break-all;
+}
+.proc-item:hover { background: #f6f8fa; }
+.proc-item.checked { background: var(--accent-bg); }
+.proc-item.active { box-shadow: inset 0 0 0 1px var(--accent); }
+.proc-item .ci { flex: 0 0 auto; margin: 0; cursor: pointer; }
+.proc-item .nm { flex: 1 1 auto; min-width: 0; }
+.proc-item .tr { flex: 0 0 auto; font-size: 10.5px; padding: 2px 7px; min-width: 46px; }
+/* 行尾的 ✕：删这一条。
+   第一版做成了"平时淡灰、hover 才变红"（怕一排红叉显得危险）——
+   **用户当场反馈"右边没有删除键"**：一列 10.5px 的淡灰叉在长列表里根本扫不见。
+   删除键要能被看见才叫删除键 —— 改成**常显的红色**，hover 时填成实心。
+   尺寸也给够（12px / padding 2px 7px），别做成一个点。 */
+.proc-item .del { flex: 0 0 auto; font-size: 12px; padding: 2px 7px;
+                  min-width: 0; color: var(--danger); line-height: 1.25; }
+.proc-item .del:hover { color: #fff; background: var(--danger);
+                        border-color: var(--danger); }
+.proc-item.importing { color: var(--muted); font-style: italic; cursor: default; }
+
+/* 全选（列表左下角，不随列表滚动） */
+.proc-pickbar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 9px; border-top: 1px solid var(--line-soft);
+}
+.chk-all {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; color: var(--text-2); cursor: pointer;
+}
+.chk-all input { margin: 0; cursor: pointer; }
+
+/* 导入进度：独立一条，不和转写抢 */
+.import-wrap { display: flex; align-items: center; gap: 6px; }
+.import-wrap.hidden { display: none; }
+.import-bar { flex: 0 0 90px; }
+.import-wrap .bar-fill { background: var(--blue); }
+
+/* 摄像头按钮上的「未接入」角标 */
+.btn[data-badge]::after {
+  content: attr(data-badge);
+  margin-left: 4px; font-size: 9.5px; padding: 0 4px; border-radius: 7px;
+  background: var(--line-soft); color: var(--muted);
+}
+.pill.cl { background: var(--blue-bg); color: var(--blue); }
+.pill.ow { background: var(--danger-bg); color: var(--danger); }
+.pill.mg { background: var(--accent-bg); color: var(--accent); }
+.pill.warn { background: #fdf3e2; color: #b7791f; }
+.proc-preview { display: flex; flex-direction: column; min-height: 0; }
+
+/* 裁剪 / 合并两个页面：整幅宽，纵向排 */
+.proc-full { flex: 1 1 auto; min-height: 0; overflow: auto;
+             display: flex; flex-direction: column; gap: 10px; padding: 12px; }
+.proc-pagehead { display: flex; align-items: center; gap: 9px; }
+.proc-pagehead .btn { padding: 4px 10px; font-size: 11.5px; }
+
+.box { border: 1px solid var(--line-soft); border-radius: 8px; padding: 9px 10px; }
+.box-title { font-size: 12px; font-weight: 600; display: flex;
+             align-items: center; gap: 8px; margin-bottom: 7px; }
+.muted { color: var(--muted); font-weight: 400; font-size: 11.5px; }
+.row-gap { display: flex; gap: 7px; margin-top: 8px; }
+.btn.tiny { font-size: 11px; padding: 3px 8px; margin-left: auto; }
+
+/* ---------------------------------------------------------------- 摄像头附属控件
+   浮层已删（点按钮直接调起系统相机）。剩下这三个控件挂在工具条上，
+   默认全隐藏，只有真需要时才露：取消等待 / ffmpeg 直录 / 降级秒数。 */
+.proc-tools .btn.tiny {
+  font-size: 11px; padding: 3px 8px; margin-left: 0;
+}
+.proc-tools .btn.hidden { display: none; }
+.cam-secs {
+  width: 52px; padding: 3px 5px; font-size: 11.5px;
+  border: 1px solid var(--line); border-radius: 5px;
+}
+.cam-secs.hidden { display: none; }
+
+/* 裁剪条 */
+.trim-track {
+  position: relative; height: 26px; border-radius: 6px;
+  background: linear-gradient(var(--line-soft), var(--line-soft));
+  border: 1px solid var(--line); cursor: pointer;
+}
+.trim-sel { position: absolute; top: 0; bottom: 0; background: rgba(47,133,90,.22);
+            border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+.trim-h {
+  position: absolute; top: -3px; bottom: -3px; width: 11px;
+  margin-left: -5px; border-radius: 4px; background: var(--accent);
+  cursor: ew-resize; box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+/* 合并页的有序列表：⠿ 按住上下拖动改顺序 */
+.merge-list {
+  list-style: none; margin: 0; padding: 4px;
+  min-height: 84px; max-height: 128px; overflow: auto;
+  border: 1px solid var(--line-soft); border-radius: 8px; background: #fcfdfe;
+}
+.mrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11.5px; padding: 6px 7px; border-radius: 6px;
+  background: #fff; border: 1px solid var(--line-soft); margin-bottom: 3px;
+}
+.mrow.dragging { border-color: var(--accent); box-shadow: var(--shadow-md); opacity: .92; }
+.mh { cursor: grab; color: var(--muted); flex: 0 0 auto; user-select: none; }
+.mn { color: var(--muted); flex: 0 0 auto; }
+.mt { flex: 1 1 auto; min-width: 0; word-break: break-all; }
+.mx { color: var(--danger); cursor: pointer; flex: 0 0 auto; }
+
+.proc-foot { display: flex; align-items: center; gap: 9px; margin-top: auto; }
+.bar { height: 4px; border-radius: 3px; background: var(--line-soft); overflow: hidden; }
+.bar-fill { height: 100%; width: 0%; background: var(--accent); transition: width .12s linear; }
+
+/* 「添加」二选一：**每一行是一个动词**，带图标 + 一句白话说明。
+   和以前的 .dlg-choice（两个一模一样的方块）刻意做得不一样 —— 那版的毛病
+   就是"看不出为什么要选"。 */
+.add-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 4px; }
+.add-row {
+  display: flex; align-items: center; gap: 10px; text-align: left;
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: #fff; cursor: pointer;
+}
+.add-row:hover { border-color: var(--accent); background: var(--accent-bg); }
+.add-ico { font-size: 18px; line-height: 1; flex: 0 0 auto; }
+.add-txt { display: flex; flex-direction: column; gap: 2px; }
+.add-txt strong { font-size: 13px; color: var(--text); }
+.add-txt small { color: var(--muted); font-size: 11px; }
+.pick-list { max-height: 300px; overflow: auto; margin: 10px 0 0; }
+.pick-item {
+  padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 12.5px;
+  word-break: break-all;
+}
+.pick-item:hover { background: var(--accent-bg); color: var(--accent); }
+.pick-empty { padding: 16px; text-align: center; color: var(--muted); font-size: 12px; }
+
+/* ================= 媒体挂载错误条 ================= */
+.media-error {
+  position: fixed; left: 50%; top: 12px; transform: translateX(-50%);
+  z-index: 90; max-width: 78vw;
+  background: var(--danger); color: #fff; font-size: 12px;
+  padding: 9px 16px; border-radius: 8px; box-shadow: var(--shadow-md);
+  white-space: pre-wrap;
+}
+.media-error.hidden { display: none; }

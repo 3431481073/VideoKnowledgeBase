@@ -1,0 +1,280 @@
+t=  0.578  起始进程数 = 392
+t=  1.500    ＋进程 tasklist.exe           pid=51056
+t=  1.500    －进程 tasklist.exe           pid=72140  【消失】
+t=  1.563  界面就绪
+t=  2.313    ＋进程 tasklist.exe           pid=93312
+t=  2.313    －进程 tasklist.exe           pid=51056  【消失】
+t=  2.563  
+t=  2.563  ===== 点「打开摄像头」之前 =====
+t=  3.078  已点 #procCamera
+t=  3.203    ＋进程 tasklist.exe           pid=86896
+t=  3.203    －进程 tasklist.exe           pid=93312  【消失】
+t=  3.797  相机进程出现，距点击 1.23s
+t=  4.094    ＋进程 tasklist.exe           pid=59332
+t=  4.094    ＋进程 WindowsCamera.exe      pid=49388
+t=  4.094    ＋进程 tasklist.exe           pid=68700
+t=  4.094    ＋进程 powershell.exe         pid=18688
+t=  4.094    －进程 tasklist.exe           pid=86896  【消失】
+t=  4.907    ＋进程 tasklist.exe           pid=48308
+t=  4.907    ＋进程 tasklist.exe           pid=83972
+t=  4.907    －进程 tasklist.exe           pid=59332  【消失】
+t=  4.907    －进程 tasklist.exe           pid=68700  【消失】
+t=  5.750    ＋进程 tasklist.exe           pid=79616
+t=  5.766    ＋进程 tasklist.exe           pid=73836
+t=  5.766    －进程 tasklist.exe           pid=48308  【消失】
+t=  5.766    －进程 tasklist.exe           pid=83972  【消失】
+t=  6.641    ＋进程 tasklist.exe           pid=38828
+t=  6.641    ＋进程 tasklist.exe           pid=91824
+t=  6.641    －进程 tasklist.exe           pid=79616  【消失】
+t=  6.641    －进程 tasklist.exe           pid=73836  【消失】
+t=  7.594    ＋进程 tasklist.exe           pid=92652
+t=  7.594    ＋进程 tasklist.exe           pid=16832
+t=  7.594    ＋进程 tasklist.exe           pid=50168
+t=  7.594    －进程 powershell.exe         pid=18688  【消失】
+t=  7.594    －进程 tasklist.exe           pid=38828  【消失】
+t=  7.594    －进程 tasklist.exe           pid=91824  【消失】
+t=  8.594    ＋进程 tasklist.exe           pid=50788
+t=  8.594    －进程 tasklist.exe           pid=92652  【消失】
+t=  8.594    －进程 tasklist.exe           pid=16832  【消失】
+t=  8.594    －进程 tasklist.exe           pid=50168  【消失】
+t=  9.469    ＋进程 tasklist.exe           pid=9252
+t=  9.469    －进程 tasklist.exe           pid=50788  【消失】
+t= 10.391    ＋进程 tasklist.exe           pid=25348
+t= 10.391    －进程 tasklist.exe           pid=9252  【消失】
+t= 11.360    ＋进程 tasklist.exe           pid=53472
+t= 11.360    －进程 tasklist.exe           pid=25348  【消失】
+t= 12.297    ＋进程 tasklist.exe           pid=22032
+t= 12.313    －进程 tasklist.exe           pid=53472  【消失】
+t= 13.203    ＋进程 tasklist.exe           pid=86848
+t= 13.203    －进程 tasklist.exe           pid=22032  【消失】
+t= 14.110    ＋进程 tasklist.exe           pid=72120
+t= 14.110    －进程 tasklist.exe           pid=86848  【消失】
+t= 14.953    ＋进程 tasklist.exe           pid=94104
+t= 14.953    －进程 tasklist.exe           pid=72120  【消失】
+t= 15.953    ＋进程 tasklist.exe           pid=88768
+t= 15.953    －进程 tasklist.exe           pid=94104  【消失】
+t= 16.922    ＋进程 tasklist.exe           pid=18416
+t= 16.922    －进程 tasklist.exe           pid=88768  【消失】
+t= 17.922    ＋进程 tasklist.exe           pid=63856
+t= 17.922    －进程 tasklist.exe           pid=18416  【消失】
+t= 18.907    ＋进程 tasklist.exe           pid=88692
+t= 18.907    ＋进程 tasklist.exe           pid=3528
+t= 18.907    －进程 tasklist.exe           pid=63856  【消失】
+t= 19.891    ＋进程 tasklist.exe           pid=41136
+t= 19.891    ＋进程 tasklist.exe           pid=28548
+t= 19.891    －进程 tasklist.exe           pid=88692  【消失】
+t= 19.891    －进程 tasklist.exe           pid=3528  【消失】
+t= 20.813    ＋进程 tasklist.exe           pid=87712
+t= 20.813    ＋进程 tasklist.exe           pid=75948
+t= 20.813    －进程 tasklist.exe           pid=41136  【消失】
+t= 20.813    －进程 tasklist.exe           pid=28548  【消失】
+t= 21.703    ＋进程 tasklist.exe           pid=64036
+t= 21.703    ＋进程 tasklist.exe           pid=26024
+t= 21.703    －进程 tasklist.exe           pid=87712  【消失】
+t= 21.703    －进程 tasklist.exe           pid=75948  【消失】
+t= 22.782    ＋进程 tasklist.exe           pid=67056
+t= 22.782    ＋进程 tasklist.exe           pid=65504
+t= 22.797    －进程 tasklist.exe           pid=64036  【消失】
+t= 22.797    －进程 tasklist.exe           pid=26024  【消失】
+t= 23.735    ＋进程 tasklist.exe           pid=94016
+t= 23.735    ＋进程 tasklist.exe           pid=39948
+t= 23.735    －进程 tasklist.exe           pid=67056  【消失】
+t= 23.735    －进程 tasklist.exe           pid=65504  【消失】
+t= 24.672    ＋进程 tasklist.exe           pid=68364
+t= 24.672    ＋进程 tasklist.exe           pid=36940
+t= 24.672    －进程 tasklist.exe           pid=94016  【消失】
+t= 24.672    －进程 tasklist.exe           pid=39948  【消失】
+t= 25.547    ＋进程 tasklist.exe           pid=25500
+t= 25.547    －进程 tasklist.exe           pid=68364  【消失】
+t= 25.547    －进程 tasklist.exe           pid=36940  【消失】
+t= 26.375    ＋进程 tasklist.exe           pid=72472
+t= 26.375    －进程 tasklist.exe           pid=25500  【消失】
+t= 27.219    ＋进程 tasklist.exe           pid=43120
+t= 27.219    －进程 tasklist.exe           pid=72472  【消失】
+t= 28.000    ＋进程 tasklist.exe           pid=47340
+t= 28.000    ＋进程 tasklist.exe           pid=42556
+t= 28.000    －进程 tasklist.exe           pid=43120  【消失】
+t= 28.907    ＋进程 tasklist.exe           pid=39272
+t= 28.907    ＋进程 tasklist.exe           pid=86248
+t= 28.907    ＋进程 tasklist.exe           pid=44124
+t= 28.907    －进程 tasklist.exe           pid=47340  【消失】
+t= 28.907    －进程 tasklist.exe           pid=42556  【消失】
+t= 29.875    ＋进程 tasklist.exe           pid=4860
+t= 29.875    ＋进程 tasklist.exe           pid=43540
+t= 29.875    －进程 tasklist.exe           pid=39272  【消失】
+t= 29.875    －进程 tasklist.exe           pid=86248  【消失】
+t= 29.875    －进程 tasklist.exe           pid=44124  【消失】
+t= 30.875    ＋进程 tasklist.exe           pid=67872
+t= 30.875    ＋进程 tasklist.exe           pid=71952
+t= 30.875    －进程 tasklist.exe           pid=4860  【消失】
+t= 30.875    －进程 tasklist.exe           pid=43540  【消失】
+t= 31.860    ＋进程 tasklist.exe           pid=65688
+t= 31.860    ＋进程 tasklist.exe           pid=38924
+t= 31.860    －进程 tasklist.exe           pid=67872  【消失】
+t= 31.860    －进程 tasklist.exe           pid=71952  【消失】
+t= 32.688    ＋进程 tasklist.exe           pid=53180
+t= 32.688    ＋进程 tasklist.exe           pid=48012
+t= 32.688    －进程 tasklist.exe           pid=65688  【消失】
+t= 32.688    －进程 tasklist.exe           pid=38924  【消失】
+t= 33.672    ＋进程 tasklist.exe           pid=87572
+t= 33.672    ＋进程 tasklist.exe           pid=10908
+t= 33.672    －进程 tasklist.exe           pid=53180  【消失】
+t= 33.672    －进程 tasklist.exe           pid=48012  【消失】
+t= 34.547    ＋进程 tasklist.exe           pid=66672
+t= 34.547    －进程 tasklist.exe           pid=87572  【消失】
+t= 34.547    －进程 tasklist.exe           pid=10908  【消失】
+t= 35.485    ＋进程 tasklist.exe           pid=41484
+t= 35.485    －进程 tasklist.exe           pid=66672  【消失】
+t= 36.438    ＋进程 tasklist.exe           pid=44436
+t= 36.438    －进程 tasklist.exe           pid=41484  【消失】
+t= 37.422    ＋进程 tasklist.exe           pid=72216
+t= 37.422    ＋进程 tasklist.exe           pid=77508
+t= 37.422    －进程 tasklist.exe           pid=44436  【消失】
+t= 38.328    ＋进程 tasklist.exe           pid=23852
+t= 38.328    ＋进程 tasklist.exe           pid=69284
+t= 38.328    －进程 tasklist.exe           pid=72216  【消失】
+t= 38.328    －进程 tasklist.exe           pid=77508  【消失】
+t= 39.297    ＋进程 tasklist.exe           pid=28508
+t= 39.297    ＋进程 tasklist.exe           pid=37768
+t= 39.297    ＋进程 tasklist.exe           pid=37560
+t= 39.297    －进程 tasklist.exe           pid=23852  【消失】
+t= 39.297    －进程 tasklist.exe           pid=69284  【消失】
+t= 40.250    ＋进程 tasklist.exe           pid=51604
+t= 40.250    ＋进程 tasklist.exe           pid=51652
+t= 40.250    －进程 tasklist.exe           pid=28508  【消失】
+t= 40.250    －进程 tasklist.exe           pid=37768  【消失】
+t= 40.250    －进程 tasklist.exe           pid=37560  【消失】
+t= 41.266    ＋进程 tasklist.exe           pid=67844
+t= 41.266    ＋进程 tasklist.exe           pid=49604
+t= 41.266    －进程 tasklist.exe           pid=51604  【消失】
+t= 41.266    －进程 tasklist.exe           pid=51652  【消失】
+t= 42.266    ＋进程 tasklist.exe           pid=28052
+t= 42.266    ＋进程 tasklist.exe           pid=18428
+t= 42.266    －进程 tasklist.exe           pid=67844  【消失】
+t= 42.266    －进程 tasklist.exe           pid=49604  【消失】
+t= 43.203    ＋进程 tasklist.exe           pid=14964
+t= 43.203    ＋进程 tasklist.exe           pid=33236
+t= 43.203    －进程 tasklist.exe           pid=28052  【消失】
+t= 43.203    －进程 tasklist.exe           pid=18428  【消失】
+t= 44.172    ＋进程 tasklist.exe           pid=74104
+t= 44.172    ＋进程 tasklist.exe           pid=79308
+t= 44.172    －进程 tasklist.exe           pid=14964  【消失】
+t= 44.172    －进程 tasklist.exe           pid=33236  【消失】
+t= 45.157    ＋进程 tasklist.exe           pid=62692
+t= 45.157    －进程 tasklist.exe           pid=74104  【消失】
+t= 45.157    －进程 tasklist.exe           pid=79308  【消失】
+t= 46.110    ＋进程 tasklist.exe           pid=18964
+t= 46.110    ＋进程 tasklist.exe           pid=13080
+t= 46.110    －进程 tasklist.exe           pid=62692  【消失】
+t= 47.110    ＋进程 tasklist.exe           pid=84776
+t= 47.110    ＋进程 tasklist.exe           pid=78280
+t= 47.110    －进程 tasklist.exe           pid=18964  【消失】
+t= 47.110    －进程 tasklist.exe           pid=13080  【消失】
+t= 48.000    ＋进程 tasklist.exe           pid=67980
+t= 48.000    －进程 tasklist.exe           pid=84776  【消失】
+t= 48.000    －进程 tasklist.exe           pid=78280  【消失】
+t= 49.016    ＋进程 tasklist.exe           pid=26296
+t= 49.016    ＋进程 tasklist.exe           pid=92968
+t= 49.016    －进程 tasklist.exe           pid=67980  【消失】
+t= 50.157    ＋进程 tasklist.exe           pid=74876
+t= 50.157    ＋进程 tasklist.exe           pid=19264
+t= 50.157    ＋进程 tasklist.exe           pid=77056
+t= 50.157    －进程 tasklist.exe           pid=26296  【消失】
+t= 50.157    －进程 tasklist.exe           pid=92968  【消失】
+t= 51.063    ＋进程 tasklist.exe           pid=86600
+t= 51.063    ＋进程 tasklist.exe           pid=14560
+t= 51.063    －进程 tasklist.exe           pid=74876  【消失】
+t= 51.063    －进程 tasklist.exe           pid=19264  【消失】
+t= 51.063    －进程 tasklist.exe           pid=77056  【消失】
+t= 52.000    ＋进程 tasklist.exe           pid=92784
+t= 52.000    ＋进程 tasklist.exe           pid=49120
+t= 52.000    －进程 tasklist.exe           pid=86600  【消失】
+t= 52.000    －进程 tasklist.exe           pid=14560  【消失】
+t= 52.969    ＋进程 tasklist.exe           pid=26860
+t= 52.969    ＋进程 tasklist.exe           pid=45900
+t= 52.969    －进程 tasklist.exe           pid=92784  【消失】
+t= 52.969    －进程 tasklist.exe           pid=49120  【消失】
+t= 53.953    ＋进程 tasklist.exe           pid=44648
+t= 53.953    ＋进程 tasklist.exe           pid=16240
+t= 53.953    －进程 tasklist.exe           pid=26860  【消失】
+t= 53.953    －进程 tasklist.exe           pid=45900  【消失】
+t= 54.891    ＋进程 tasklist.exe           pid=3860
+t= 54.891    ＋进程 tasklist.exe           pid=86800
+t= 54.891    －进程 tasklist.exe           pid=44648  【消失】
+t= 54.891    －进程 tasklist.exe           pid=16240  【消失】
+t= 55.907    ＋进程 tasklist.exe           pid=60736
+t= 55.907    ＋进程 tasklist.exe           pid=58732
+t= 55.907    －进程 tasklist.exe           pid=3860  【消失】
+t= 55.907    －进程 tasklist.exe           pid=86800  【消失】
+t= 56.953    ＋进程 tasklist.exe           pid=87728
+t= 56.953    ＋进程 tasklist.exe           pid=89564
+t= 56.953    －进程 tasklist.exe           pid=60736  【消失】
+t= 56.953    －进程 tasklist.exe           pid=58732  【消失】
+t= 57.953    ＋进程 tasklist.exe           pid=58276
+t= 57.953    ＋进程 tasklist.exe           pid=26572
+t= 57.953    －进程 tasklist.exe           pid=87728  【消失】
+t= 57.953    －进程 tasklist.exe           pid=89564  【消失】
+t= 58.891    ＋进程 tasklist.exe           pid=87288
+t= 58.891    ＋进程 tasklist.exe           pid=6700
+t= 58.891    －进程 tasklist.exe           pid=58276  【消失】
+t= 58.891    －进程 tasklist.exe           pid=26572  【消失】
+t= 59.891    ＋进程 tasklist.exe           pid=83796
+t= 59.907    ＋进程 tasklist.exe           pid=59128
+t= 59.907    －进程 tasklist.exe           pid=87288  【消失】
+t= 59.907    －进程 tasklist.exe           pid=6700  【消失】
+t= 60.938    ＋进程 tasklist.exe           pid=68048
+t= 60.938    ＋进程 tasklist.exe           pid=49908
+t= 60.938    ＋进程 tasklist.exe           pid=63172
+t= 60.938    －进程 tasklist.exe           pid=83796  【消失】
+t= 60.938    －进程 tasklist.exe           pid=59128  【消失】
+t= 61.938    ＋进程 tasklist.exe           pid=63192
+t= 61.938    ＋进程 tasklist.exe           pid=77540
+t= 61.938    －进程 tasklist.exe           pid=68048  【消失】
+t= 61.938    －进程 tasklist.exe           pid=49908  【消失】
+t= 61.938    －进程 tasklist.exe           pid=63172  【消失】
+t= 62.875    ＋进程 tasklist.exe           pid=58780
+t= 62.875    －进程 tasklist.exe           pid=63192  【消失】
+t= 62.875    －进程 tasklist.exe           pid=77540  【消失】
+t= 63.782    ＋进程 tasklist.exe           pid=43028
+t= 63.782    －进程 tasklist.exe           pid=58780  【消失】
+t= 64.750    ＋进程 tasklist.exe           pid=38388
+t= 64.750    －进程 tasklist.exe           pid=43028  【消失】
+t= 65.657    ＋进程 tasklist.exe           pid=46752
+t= 65.657    －进程 WindowsCamera.exe      pid=49388  【消失】
+t= 65.657    －进程 tasklist.exe           pid=38388  【消失】
+t= 66.469    ＋进程 tasklist.exe           pid=62404
+t= 66.469    －进程 tasklist.exe           pid=46752  【消失】
+t= 67.360    ＋进程 tasklist.exe           pid=70304
+t= 67.360    －进程 tasklist.exe           pid=62404  【消失】
+t= 68.297    ＋进程 tasklist.exe           pid=71228
+t= 68.297    －进程 tasklist.exe           pid=70304  【消失】
+t= 69.188    ＋进程 tasklist.exe           pid=47232
+t= 69.188    －进程 tasklist.exe           pid=71228  【消失】
+t= 70.094    ＋进程 tasklist.exe           pid=74508
+t= 70.094    －进程 tasklist.exe           pid=47232  【消失】
+t= 71.141    ＋进程 tasklist.exe           pid=92632
+t= 71.141    ＋进程 tasklist.exe           pid=3140
+t= 71.141    ＋进程 tasklist.exe           pid=61436
+t= 71.141    －进程 tasklist.exe           pid=74508  【消失】
+t= 72.157    ＋进程 tasklist.exe           pid=61760
+t= 72.157    ＋进程 tasklist.exe           pid=24880
+t= 72.157    －进程 tasklist.exe           pid=92632  【消失】
+t= 72.157    －进程 tasklist.exe           pid=3140  【消失】
+t= 72.157    －进程 tasklist.exe           pid=61436  【消失】
+t= 73.063    ＋进程 tasklist.exe           pid=31516
+t= 73.063    ＋进程 tasklist.exe           pid=28800
+t= 73.063    －进程 tasklist.exe           pid=61760  【消失】
+t= 73.063    －进程 tasklist.exe           pid=24880  【消失】
+t= 73.485  
+t= 73.485  ===== 结果 =====
+t= 73.485  点按钮 -> 相机进程出现: 1.23s
+t= 73.485  ffmpeg 全程出现过吗: 没有 —— dshow 没被触发
+t= 73.485  监视状态: {"active": true, "stage": "waiting", "found": [], "photos": 0, "elapsed": 69.67200000002049, "note": "相机应用当前没在运行，仍在等待…（按红色圆点开始录制；不想录了可以点「取消等待」）", "error": null, "dirs": ["C:\\Users\\asus\\Pictures\\Camera Roll", "C:\\Users\\asus\\Pictures", "D:\\asus\\Pictures", "D:\\asus\\Pictures\\Camera Roll", "C
+t= 73.485  
+t= 73.485  ===== camera_app 内部时间线（从进程启动算）=====
+t= 73.485    +  1.500s  launch() 开始；当前 app_running=False
+t= 73.485    +  1.500s  第 1 级：os.startfile(microsoft.windows.camera:)
+t= 73.485    +  1.859s  第 1 级成功，进程出现，耗时 0.36s
+t= 73.485    +  1.875s  open_camera_watch：快照了 5 个候选目录，开始监视
+t= 73.485  
+t= 73.485  监控结束，共 73.5s

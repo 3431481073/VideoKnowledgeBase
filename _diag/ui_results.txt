@@ -1,0 +1,150 @@
+t=  1.17  界面就绪
+t=  1.78  窗口样式: {"found": true, "hwnd": 1379194, "resizable": false, "maximizeBox": false, "minimizeBox": true, "style": "0x16ca0000"}
+t=  2.28  已把窗口提到前台
+t=  2.28  注入测试脚本 26708 字节
+t= 16.44  ---- 结果 ----
+t= 16.44  PASS  5a  #pageDone 里没有「已完成」标题                       
+t= 16.44  PASS  6a  tab 字号 <= 11.5px                           11px
+t= 16.44  PASS  6b  tab 按钮高 <= 22px                            22.0
+t= 16.44  PASS  6c  头栏高 <= 34px                                32.0
+t= 16.44  PASS  6d  列表拿到的高度远大于头栏                               236 vs 32.0
+t= 16.44  PASS  7a  上下比 = 3:2                                  1.500
+t= 16.44  PASS  7b  左右两条横分栏线同一 y                               402 vs 402
+t= 16.44  PASS  7c  横分栏线在上下之间                                  
+t= 16.44  PASS  7d  上排两格等高                                     402 vs 402
+t= 16.44  PASS  7e  下排两格等高                                     268 vs 268
+t= 16.44  PASS  7f  上排左宽 : 右宽 = 2:1                            1.998
+t= 16.44  PASS  7g  竖分栏线贯穿全高                                   
+t= 16.44  PASS  7h  左列两格 x 相同                                  
+t= 16.44  PASS  4a  树上有可播的内容节点                                 4
+t= 16.44  PASS  4b  点内容节点后视频已就绪                                {"url":"media/sample_01.mp4","readyState":4,"paused":true,"muted":false,"volume":0.8,"rotation":0,"range":null,"loop":false,"loopWatching":false,"currentTime":0,"duration":8,"emptyVisible":false}
+t= 16.44  PASS  4c  默认暂停（没有自动播）                                true
+t= 16.44  PASS  4d  停在第一帧（currentTime=0）                       0
+t= 16.44  PASS  4e  readyState>=2 说明首帧已解码                      4
+t= 16.44  PASS  2a  播放键文字确实切了（证明状态真的变过）                        ▶ -> ❚❚
+t= 16.44  PASS  2b  暂停->播放：整条控制栏几何不变                           
+t= 16.45  PASS  2c  播放->暂停：整条控制栏几何不变                           
+t= 16.45  PASS  2d  播放键几何不变                                    
+t= 16.45  PASS  2e  时长标签几何不变                                   
+t= 16.45  PASS  2f  进度轴几何不变                                    
+t= 16.45  PASS  2g  旋转/音量键几何不变                                 
+t= 16.45  PASS  3a  点音量图标弹出滑块                                  false
+t= 16.45  PASS  3b  滑块是竖的（高 > 宽）                               4x92
+t= 16.45  PASS  3c  滑块有 rotate 变换                              
+t= 16.45  PASS  3d  滑块区域高 >= 80px                              92
+t= 16.45  PASS  3e  滑块贴在音量键正上方                                 
+t= 16.45  PASS  3f  横向没有横放的音量条                                 
+t= 16.45  PASS  3g  点外部收起滑块                                    
+t= 16.45  PASS  3h  音量拖到 0 -> 图标变静音                            🔇
+t= 16.45  PASS  3i  音量调回 -> 图标恢复                               
+t= 16.45  PASS  9a  初始角度 0                                     0
+t= 16.45  PASS  9b  点一次 -> 90°                                 90
+t= 16.45  PASS  9c  元素真的带了 rotate(90deg)                       rotate(90deg)
+t= 16.45  PASS  9d  宽高对调成 舞台高×舞台宽                              306px x 383px stage 383x306
+t= 16.45  PASS  9e  再点 -> 180°                                 
+t= 16.45  PASS  9f  转四次回到 0°                                   
+t= 16.45  PASS  9g  回到 0° 宽高复原                                 
+t= 16.45  PASS  9h  A 已转到 90°                                  
+t= 16.45  PASS  9i  换到另一个视频 -> 角度独立为 0                         0
+t= 16.45  PASS  9j  回到 A -> 恢复记忆的 90°                          
+t= 16.45  PASS  9k  角度归零                                       
+t= 16.45  PASS  1a  处理浮层已打开                                    
+t= 16.45  PASS  1b  8 组快捷键全部无副作用                               {"page":"list","boot":true,"settings":false,"vol":false,"dlg":false} -> {"page":"list","boot":true,"settings":false,"vol":false,"dlg":false}
+t= 16.45  PASS  1c  处理浮层仍开着                                    
+t= 16.45  PASS  1d  按 Esc 浮层不关（快捷键已拆）                          
+t= 16.45  PASS  N1a 进浮层默认是常态，不是裁剪                              list
+t= 16.45  PASS  N1b 常态页有预览播放器                                  
+t= 16.45  PASS  N1c 常态页有列表和两个功能按钮                              
+t= 16.45  PASS  N1d 顶部保留导入 / 摄像头                               
+t= 16.45  PASS  N1e 列表有多条                                      5
+t= 16.45  PASS  N1f 没选中 -> 裁剪禁用                                {"cropDisabled":true,"mergeDisabled":true}
+t= 16.45  PASS  N1g 没选中 -> 合并禁用                                {"cropDisabled":true,"mergeDisabled":true}
+t= 16.45  PASS  N2a 点行 -> 右边预览该视频                              i21 vs i21
+t= 16.45  PASS  N2b 点行 -> 仍停在常态（没进任何模式）                        list
+t= 16.45  PASS  N2c 点行 -> 选中数没变                                0 -> 0
+t= 16.45  PASS  N2d 预览真的加载了视频                                  {"url":"media/sample_01.mp4","readyState":4,"paused":true,"muted":false,"volume":0.8,"rotation":0,"range":null,"loop":false,"loopWatching":false,"currentTime":0,"duration":8,"emptyVisible":false}
+t= 16.45  PASS  N2e 预览默认暂停                                     
+t= 16.45  PASS  N3a 点勾选框 -> 选中 +1                              0 -> 1
+t= 16.45  PASS  N3b 点勾选框 -> 预览 url 一字不变                        media/sample_01.mp4 vs media/sample_01.mp4
+t= 16.45  PASS  N3c 点勾选框 -> 预览的条目也没变                           
+t= 16.45  PASS  N4a 选中 1 条 -> 裁剪可用                             
+t= 16.45  PASS  N4b 选中 1 条 -> 合并仍禁用                            
+t= 16.45  PASS  N5a 点另一行 -> 预览切过去                              
+t= 16.45  PASS  N5b 点另一行 -> 选中数仍是 1                            1
+t= 16.47  PASS  N6a 选中 2 条 -> 裁剪转为禁用                           
+t= 16.47  PASS  N6b 选中 2 条 -> 合并可用                             
+t= 16.47  PASS  N7  全部取消 -> 两个都禁用                              
+t= 16.47  PASS  C1a 选中 1 条 + 点裁剪 -> 进入裁剪模式                     trim
+t= 16.47  PASS  C1b 裁剪页没有合并列表                                  
+t= 16.47  PASS  C1c 裁剪页没有导出按钮                                  
+t= 16.47  PASS  C1d 标题写清了裁的是哪一条                                裁剪：【断板反包】2号试验品启动
+t= 16.47  PASS  C1e 底部是 保存为新片段 / 覆盖原视频 / 返回                    
+t= 16.47  PASS  C2a 拿到时长                                       8
+t= 16.47  PASS  C2b 初始区间 = 整条                                  {"a":0,"b":8} dur=8
+t= 16.47  PASS  C3a 拖 A 把手 -> 起点落到 30%                         2.40 vs 2.40
+t= 16.47  PASS  C3b 拖动时预览实时 seek 到该帧                           2.4 vs 2.3965514928067178
+t= 16.47  PASS  C3c 把手位置与区间一致                                  29.9569%
+t= 16.47  PASS  C4a 区间已同步给播放器                                  {"a":1.5,"b":3.5}
+t= 16.47  PASS  C4b 播放器处于循环模式                                  
+t= 16.47  PASS  C4c 播放中没有跳出区间上界（<= 3.8）                        3.500
+t= 16.47  PASS  C4d 播放中没有跌出区间下界（>= 1.3）                        1.510
+t= 16.47  PASS  C4e 全程没有停下来                                    false
+t= 16.47  PASS  C4f 确实发生了循环回卷（>=1 次）                           2 次；样本 180
+t= 16.47  PASS  C4g 暂停时能拖到区间外且不被拉回                             6
+t= 16.47  PASS  C5a 保存为新片段 -> 列表多一条                            5 -> 6
+t= 16.47  PASS  C5b 新片段带「片段」标签                                 片段 1.5–4.5s
+t= 16.47  PASS  C5c 保存后自动回常态页                                  list
+t= 16.47  PASS  C6a 覆盖原视频 -> 条目数不变                             6 -> 6
+t= 16.47  PASS  C6b 出现「待覆盖」标签                                  待覆盖 2.0–5.0s | 片段 1.5–4.5s
+t= 16.47  PASS  C6c 覆盖后仍停在裁剪页                                  trim
+t= 16.47  PASS  C7  点「返回」回常态页                                  list
+t= 16.47  PASS  M0a 从裁剪退出后合并状态为空                               0
+t= 16.47  PASS  M0b 勾选 3 条 -> 裁剪禁用（规格：≥2 只能合并）                 
+t= 16.47  PASS  M0c 勾选 3 条 -> 合并可用                             
+t= 16.47  PASS  M1a 进入合并模式                                     merge
+t= 16.47  PASS  M1b 合并列表 3 段                                   3
+t= 16.47  PASS  M1c 每段都有有效区间                                   [["【断板反包】2号试验品启动",0,8],["一个视频让你看懂断板反包复盘逻辑",2,5],["从被套到解套：历史案例复盘",0,8]]
+t= 16.47  PASS  M1d 合并页没有时间轴/裁剪把手                              
+t= 16.47  PASS  M1e 合并页没有「覆盖原视频」                               
+t= 16.47  PASS  M1f 合并页底部是 导出 / 返回                             
+t= 16.47  PASS  M2a 有序列表渲染出 3 行                                3
+t= 16.47  PASS  M2b 往下拖 -> 顺序真的变了                              【断板反包】2号试验品启动>一个视频让你看懂断板反包复盘逻辑>从被套到解套：历史案例复盘 => 一个视频让你看懂断板反包复盘逻辑>【断板反包】2号试验品启动>从被套到解套：历史案例复盘
+t= 16.47  PASS  M2c 只挪一格（与后一行交换）                               一个视频让你看懂断板反包复盘逻辑>【断板反包】2号试验品启动>从被套到解套：历史案例复盘
+t= 16.47  PASS  M2d 末行拖到最前 -> 整体右移一位                           一个视频让你看懂断板反包复盘逻辑>【断板反包】2号试验品启动>从被套到解套：历史案例复盘 => 从被套到解套：历史案例复盘>一个视频让你看懂断板反包复盘逻辑>【断板反包】2号试验品启动
+t= 16.47  PASS  M3a 点播放键 -> 顺序预览启动                             {"url":"media/sample_03.mp4","readyState":4,"paused":false,"muted":false,"volume":0.8,"rotation":0,"range":{"a":0,"b":8},"loop":false,"loopWatching":false,"currentTime":0.02,"duration":8,"emptyVisible":false}
+t= 16.47  PASS  M3b 播的是列表里的第一段                                 media/sample_03.mp4 vs media/sample_03.mp4
+t= 16.47  PASS  M3c 播放位置在区间内                                   0.02 in [0,8]
+t= 16.47  PASS  M3d 合并预览不是循环模式                                 
+t= 16.47  PASS  M3e 顺序播放标记为进行中                                 
+t= 16.47  PASS  M4a 导出后列表多一条                                   6 -> 7
+t= 16.47  PASS  M4b 新条目带「合并 N 段」标签                             待覆盖 2.0–5.0s | 片段 1.5–4.5s | 合并 3 段
+t= 16.47  PASS  M4c 导出后仍在合并页                                   merge
+t= 16.47  PASS  M5a 「返回」回常态页                                   list
+t= 16.47  PASS  M5b 退出合并后合并页隐藏                                 
+t= 16.47  PASS  M5c 退出合并后裁剪页也隐藏                                
+t= 16.47  PASS  I1a 常态页里看不到裁剪的时间轴                              
+t= 16.47  PASS  I1b 常态页里看不到合并列表                                
+t= 16.47  PASS  I1c 常态页里看不到导出按钮                                
+t= 16.47  PASS  I1d 常态页里三个预览只有一个可见（列表预览）                       
+t= 16.47  PASS  I2a 进裁剪后，常态页与合并页都隐藏                            
+t= 16.47  PASS  I2b 裁剪页里只有裁剪预览可见                               
+t= 16.47  PASS  I2c 进裁剪不改变合并数据（两边状态互相看不见）                      3 段
+t= 16.47  PASS  I3a 裁剪退出后回到常态                                  
+t= 16.47  PASS  I3b 常态页的选中状态保留（不因进过裁剪而清空）                      1
+t= 16.48  PASS  14a 浮层 overlay 不吃点击                            none
+t= 16.48  PASS  14b 面板本身可点                                     auto
+t= 16.48  PASS  14c 浮层外仍命中主界面                                  graphViewport
+t= 16.48  PASS  T1a 点行内「转写」不改变预览                               i23 -> i23
+t= 16.48  PASS  T1b 点行内「转写」不改变选中数                              
+t= 16.48  PASS  T1c 转写真的启动了                                    【断板反包】2号试验品启动：转写 23%
+t= 16.48  PASS  T1d 进度条在走                                      23%
+t= 16.48  PASS  R1  右下三 tab 计数自洽                               
+t= 16.48  PASS  R2  导图有连线                                      11
+t= 16.48  PASS  R3  无 CDN 外链                                   
+t= 16.48  PASS  R4  静态标记里除 grid-area 无内联样式                     
+t= 16.48  PASS  R4b 静态标记里确有 grid-area（证明上面查到了东西）               4
+t= 16.48  PASS  R5  浅色背景                                       rgb(238, 240, 243)
+t= 16.48  PASS  R6  无遮挡（无溢出）                                   {"innerW":1226,"innerH":675,"overRight":0,"overBottom":0,"hOverflow":0,"vOverflow":0,"bootHidden":true,"mediaErrorShown":false,"mediaErrorText":""}
+t= 16.48  PASS  R7  启动遮罩已隐藏                                    
+t= 16.48  PASS  R8  没有媒体错误条                                    
+t= 16.48  合计 144 通过 / 0 失败 / 共 144
